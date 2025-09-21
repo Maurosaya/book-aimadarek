@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: booking-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - booking-network
+    depends_on:
+      - postgres
+      - redis
+
+  nginx:
+    image: nginx:alpine
+    container_name: booking-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - booking-network
+    depends_on:
+      - app
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: booking-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: booking_system
+      POSTGRES_USER: booking_user
+      POSTGRES_PASSWORD: booking_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - booking-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: booking-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - booking-network
+
+  horizon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: booking-horizon
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    command: php artisan horizon
+    networks:
+      - booking-network
+    depends_on:
+      - app
+      - redis
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  booking-network:
+    driver: bridge
