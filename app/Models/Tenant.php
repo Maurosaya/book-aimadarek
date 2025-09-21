@@ -20,6 +20,7 @@ class Tenant extends BaseTenant
         'timezone',
         'settings',
         'webhook_secret',
+        'active',
     ];
 
     /**
@@ -30,6 +31,7 @@ class Tenant extends BaseTenant
     protected $casts = [
         'supported_locales' => 'array',
         'settings' => 'array',
+        'active' => 'boolean',
     ];
 
     /**

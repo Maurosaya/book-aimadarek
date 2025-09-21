@@ -165,8 +165,8 @@ class SuperAdminController extends Controller
             'active' => $request->boolean('active'),
         ]);
 
-        return redirect()->route('admin.tenants.index')
-            ->with('success', 'Empresa actualizada exitosamente.');
+        return redirect()->route('admin.tenants.show', $tenant)
+            ->with('success', __('admin.notifications.company_updated'));
     }
 
     public function destroyTenant(Tenant $tenant)
