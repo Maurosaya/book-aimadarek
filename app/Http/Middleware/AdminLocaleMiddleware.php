@@ -28,6 +28,11 @@ class AdminLocaleMiddleware
             
             // Set the application locale
             app()->setLocale($locale);
+            
+            // Also set the locale in the session if it wasn't set
+            if (!session()->has('admin_locale')) {
+                session(['admin_locale' => $locale]);
+            }
         }
 
         return $next($request);
