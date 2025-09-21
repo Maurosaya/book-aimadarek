@@ -173,17 +173,11 @@ return [
     // Footer
     'footer' => [
         'description' => 'Intelligent boekingssysteem met AI voor restaurants, kappers, schoonheidssalons en tandartspraktijken.',
-        'links' => [
-            'features' => 'Functies',
-            'demo' => 'Demo',
-            'api' => 'API',
-            'contact' => 'Contact',
-        ],
-        'legal' => [
-            'privacy' => 'Privacy',
-            'terms' => 'Voorwaarden',
-            'cookies' => 'Cookies',
-        ],
+        'links' => 'Links',
+        'legal' => 'Legal',
+        'privacy' => 'Privacy',
+        'terms' => 'Voorwaarden',
+        'cookies' => 'Cookies',
         'copyright' => '© :year :brand. Alle rechten voorbehouden.',
     ],
 

@@ -173,17 +173,11 @@ return [
     // Footer
     'footer' => [
         'description' => 'Sistema inteligente de reservas con IA para restaurantes, barberías, salones de belleza y clínicas dentales.',
-        'links' => [
-            'features' => 'Características',
-            'demo' => 'Demo',
-            'api' => 'API',
-            'contact' => 'Contacto',
-        ],
-        'legal' => [
-            'privacy' => 'Privacidad',
-            'terms' => 'Términos',
-            'cookies' => 'Cookies',
-        ],
+        'links' => 'Enlaces',
+        'legal' => 'Legal',
+        'privacy' => 'Privacidad',
+        'terms' => 'Términos',
+        'cookies' => 'Cookies',
         'copyright' => '© :year :brand. Todos los derechos reservados.',
     ],
 

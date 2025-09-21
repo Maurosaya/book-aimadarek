@@ -173,17 +173,11 @@ return [
     // Footer
     'footer' => [
         'description' => 'Intelligent booking system with AI for restaurants, barbershops, beauty salons, and dental clinics.',
-        'links' => [
-            'features' => 'Features',
-            'demo' => 'Demo',
-            'api' => 'API',
-            'contact' => 'Contact',
-        ],
-        'legal' => [
-            'privacy' => 'Privacy',
-            'terms' => 'Terms',
-            'cookies' => 'Cookies',
-        ],
+        'links' => 'Links',
+        'legal' => 'Legal',
+        'privacy' => 'Privacy',
+        'terms' => 'Terms',
+        'cookies' => 'Cookies',
         'copyright' => '© :year :brand. All rights reserved.',
     ],
 

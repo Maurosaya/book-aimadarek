@@ -59,10 +59,85 @@
     </style>
     
     <!-- Vite Assets -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @if(app()->environment('local'))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @else
+        <link rel="stylesheet" href="{{ asset('build/assets/app-C_OHvGmE.css') }}">
+        <script src="{{ asset('build/assets/app-Bj43h_rG.js') }}" defer></script>
+    @endif
     
     <!-- Additional Styles -->
     <style>
+        /* Critical CSS for immediate rendering */
+        body { 
+            font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif; 
+            line-height: 1.6; 
+            color: #1f2937; 
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .dark body { 
+            color: #f9fafb; 
+            background-color: #111827; 
+        }
+        
+        /* Force proper sizing and layout */
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            padding: 4rem 0 !important;
+        }
+        .dark .hero-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%) !important;
+        }
+        
+        /* Ensure proper container sizing */
+        .max-w-7xl {
+            max-width: 80rem !important;
+            margin: 0 auto !important;
+            padding: 0 1rem !important;
+        }
+        
+        /* Fix hero text sizing */
+        .text-4xl {
+            font-size: 2.25rem !important;
+            line-height: 2.5rem !important;
+        }
+        .text-5xl {
+            font-size: 3rem !important;
+            line-height: 1 !important;
+        }
+        
+        /* Ensure skip link is hidden */
+        .sr-only {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border-width: 0 !important;
+        }
+        
+        /* Navigation fixes */
+        .fixed {
+            position: fixed !important;
+        }
+        .top-0 {
+            top: 0 !important;
+        }
+        .left-0 {
+            left: 0 !important;
+        }
+        .right-0 {
+            right: 0 !important;
+        }
+        .z-40 {
+            z-index: 40 !important;
+        }
+        
         /* Smooth scrolling and focus styles */
         html { scroll-behavior: smooth; }
         *:focus { outline: 2px solid #3b82f6; outline-offset: 2px; }
@@ -71,37 +146,6 @@
         .lang-selector {
             position: relative;
             display: inline-block;
-        }
-        .lang-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            z-index: 50;
-            min-width: 120px;
-        }
-        .dark .lang-dropdown {
-            background: #1f2937;
-            border-color: #374151;
-        }
-        .lang-option {
-            display: block;
-            width: 100%;
-            padding: 0.5rem 1rem;
-            text-align: left;
-            border: none;
-            background: none;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .lang-option:hover {
-            background-color: #f3f4f6;
-        }
-        .dark .lang-option:hover {
-            background-color: #374151;
         }
         
         /* Widget demo styles */
@@ -138,7 +182,7 @@
 
 <body class="antialiased loading" data-theme="auto">
     <!-- Skip to main content for accessibility -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-md z-50">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-md z-50 transition-all">
         Skip to main content
     </a>
 
@@ -172,25 +216,23 @@
                 <!-- Language Selector & CTA -->
                 <div class="flex items-center space-x-4">
                     <!-- Language Selector -->
-                    <div class="lang-selector">
-                        <button id="lang-toggle" class="flex items-center space-x-1 text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors" aria-label="Select language">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"/>
-                            </svg>
-                            <span class="uppercase">{{ app()->getLocale() }}</span>
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                            </svg>
-                        </button>
-                        <div id="lang-dropdown" class="lang-dropdown hidden">
+                    <form method="GET" class="lang-selector">
+                        <select name="locale" onchange="this.form.submit()" 
+                                class="border rounded-md px-2 py-1 bg-background text-sm font-medium text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                                aria-label="Select language">
                             @foreach($supported_locales as $locale)
-                                <a href="{{ request()->fullUrlWithQuery(['locale' => $locale]) }}" 
-                                   class="lang-option {{ app()->getLocale() === $locale ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400' : '' }}">
+                                <option value="{{ $locale }}" {{ app()->getLocale() === $locale ? 'selected' : '' }}>
                                     {{ strtoupper($locale) }}
-                                </a>
+                                </option>
                             @endforeach
-                        </div>
-                    </div>
+                        </select>
+                        <!-- Preserve other query parameters -->
+                        @foreach(request()->query() as $key => $value)
+                            @if($key !== 'locale')
+                                <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                            @endif
+                        @endforeach
+                    </form>
 
                     <!-- CTA Button -->
                     <a href="{{ $marketing['contact_url'] }}" 
@@ -221,7 +263,7 @@
     </nav>
 
     <!-- Main Content -->
-    <main id="main-content" role="main">
+    <main id="main-content" role="main" class="pt-16">
         @yield('content')
     </main>
 
@@ -244,22 +286,22 @@
 
                 <!-- Links -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Links</h3>
+                    <h3 class="text-lg font-semibold mb-4">{{ __('landing.footer.links') }}</h3>
                     <ul class="space-y-2">
-                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors">Features</a></li>
-                        <li><a href="#demo" class="text-gray-400 hover:text-white transition-colors">Demo</a></li>
-                        <li><a href="#api" class="text-gray-400 hover:text-white transition-colors">API</a></li>
-                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors">{{ __('landing.nav.features') }}</a></li>
+                        <li><a href="#demo" class="text-gray-400 hover:text-white transition-colors">{{ __('landing.nav.demo') }}</a></li>
+                        <li><a href="#api" class="text-gray-400 hover:text-white transition-colors">{{ __('landing.nav.api') }}</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">{{ __('landing.nav.contact') }}</a></li>
                     </ul>
                 </div>
 
                 <!-- Legal -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Legal</h3>
+                    <h3 class="text-lg font-semibold mb-4">{{ __('landing.footer.legal') }}</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Terms</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Cookies</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">{{ __('landing.footer.privacy') }}</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">{{ __('landing.footer.terms') }}</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">{{ __('landing.footer.cookies') }}</a></li>
                     </ul>
                 </div>
             </div>
@@ -278,23 +320,7 @@
             document.body.classList.remove('loading');
             document.body.classList.add('loaded');
 
-            // Language selector
-            const langToggle = document.getElementById('lang-toggle');
-            const langDropdown = document.getElementById('lang-dropdown');
-            
-            if (langToggle && langDropdown) {
-                langToggle.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    langDropdown.classList.toggle('hidden');
-                });
-
-                // Close dropdown when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
-                        langDropdown.classList.add('hidden');
-                    }
-                });
-            }
+            // Language selector is now handled by native form submission
 
             // Mobile menu
             const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
