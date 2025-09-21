@@ -141,84 +141,8 @@
         </div>
     </section>
 
-    <!-- Verticals Section -->
-    <section class="py-20 bg-gray-50 dark:bg-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                    {{ __('landing.verticals.title') }}
-                </h2>
-                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                    {{ __('landing.verticals.subtitle') }}
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Restaurant -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-orange-600 dark:text-orange-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                        {{ __('landing.verticals.restaurant.title') }}
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        {{ __('landing.verticals.restaurant.description') }}
-                    </p>
-                </div>
-
-                <!-- Barber -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                        {{ __('landing.verticals.barber.title') }}
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        {{ __('landing.verticals.barber.description') }}
-                    </p>
-                </div>
-
-                <!-- Beauty -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-pink-600 dark:text-pink-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                        {{ __('landing.verticals.beauty.title') }}
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        {{ __('landing.verticals.beauty.description') }}
-                    </p>
-                </div>
-
-                <!-- Dental -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                        {{ __('landing.verticals.dental.title') }}
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        {{ __('landing.verticals.dental.description') }}
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Demo Section -->
-    <section id="demo" class="py-20 bg-white dark:bg-gray-900">
+    <section id="demo" class="py-20 bg-gray-50 dark:bg-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -240,195 +164,24 @@
                         </p>
                     </div>
 
-                    @if($demo['has_demo_data'])
-                        <!-- Real widget would go here -->
-                        <div id="reservas-widget" class="space-y-4">
-                            <div class="text-center p-8 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-800 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
-                                <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                                    {{ __('landing.demo.view_schedule') }}
-                                </h4>
-                                <p class="text-gray-600 dark:text-gray-300 mb-4">
-                                    {{ __('landing.demo.demo_message') }}
-                                </p>
-                                <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
-                                    {{ __('landing.demo.view_schedule') }}
-                                </button>
-                            </div>
+                    <!-- Demo mode -->
+                    <div class="text-center p-8 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <div class="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                            </svg>
                         </div>
-                    @else
-                        <!-- Demo mode -->
-                        <div class="text-center p-8 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                            <div class="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <svg class="w-6 h-6 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                                {{ __('landing.demo.demo_mode') }}
-                            </h4>
-                            <p class="text-gray-600 dark:text-gray-300 mb-4">
-                                {{ __('landing.demo.no_data') }}
-                            </p>
-                            <a href="{{ $marketing['contact_url'] }}" 
-                               class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
-                                {{ __('landing.demo.configure_service') }}
-                            </a>
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="py-20 bg-gray-50 dark:bg-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                    {{ __('landing.how_it_works.title') }}
-                </h2>
-                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                    {{ __('landing.how_it_works.subtitle') }}
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Step 1 -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
-                        1
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                            {{ __('landing.demo.demo_mode') }}
+                        </h4>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            {{ __('landing.demo.no_data') }}
+                        </p>
+                        <a href="{{ $marketing['contact_url'] }}" 
+                           class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                            {{ __('landing.demo.configure_service') }}
+                        </a>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                        {{ __('landing.how_it_works.step1.title') }}
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        {{ __('landing.how_it_works.step1.description') }}
-                    </p>
-                </div>
-
-                <!-- Step 2 -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
-                        2
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                        {{ __('landing.how_it_works.step2.title') }}
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        {{ __('landing.how_it_works.step2.description') }}
-                    </p>
-                </div>
-
-                <!-- Step 3 -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
-                        3
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                        {{ __('landing.how_it_works.step3.title') }}
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        {{ __('landing.how_it_works.step3.description') }}
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- API Section -->
-    <section id="api" class="py-20 bg-white dark:bg-gray-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                    {{ __('landing.api.title') }}
-                </h2>
-                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-                    {{ __('landing.api.subtitle') }}
-                </p>
-                <p class="text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto">
-                    {{ __('landing.api.description') }}
-                </p>
-            </div>
-
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="{{ $marketing['docs_url'] }}" 
-                   class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors">
-                    {{ __('landing.api.view_docs') }}
-                </a>
-                <a href="/api/health" 
-                   class="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors">
-                    {{ __('landing.api.test_endpoint') }}
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="py-20 bg-gray-50 dark:bg-gray-800">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                    {{ __('landing.faq.title') }}
-                </h2>
-                <p class="text-xl text-gray-600 dark:text-gray-300">
-                    {{ __('landing.faq.subtitle') }}
-                </p>
-            </div>
-
-            <div class="space-y-6">
-                <!-- FAQ 1 -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-sm">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                        {{ __('landing.faq.q1.question') }}
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        {{ __('landing.faq.q1.answer') }}
-                    </p>
-                </div>
-
-                <!-- FAQ 2 -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-sm">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                        {{ __('landing.faq.q2.question') }}
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        {{ __('landing.faq.q2.answer') }}
-                    </p>
-                </div>
-
-                <!-- FAQ 3 -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-sm">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                        {{ __('landing.faq.q3.question') }}
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        {{ __('landing.faq.q3.answer') }}
-                    </p>
-                </div>
-
-                <!-- FAQ 4 -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-sm">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                        {{ __('landing.faq.q4.question') }}
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        {{ __('landing.faq.q4.answer') }}
-                    </p>
-                </div>
-
-                <!-- FAQ 5 -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-sm">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                        {{ __('landing.faq.q5.question') }}
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        {{ __('landing.faq.q5.answer') }}
-                    </p>
                 </div>
             </div>
         </div>

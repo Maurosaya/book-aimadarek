@@ -139,11 +139,11 @@
 <body class="antialiased loading" data-theme="auto">
     <!-- Skip to main content for accessibility -->
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-md z-50">
-        {{ __('landing.common.skip_to_content') ?? 'Skip to main content' }}
+        Skip to main content
     </a>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200 dark:bg-gray-900/80 dark:border-gray-700" role="navigation" aria-label="{{ __('landing.nav.main') ?? 'Main navigation' }}">
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200 dark:bg-gray-900/80 dark:border-gray-700" role="navigation" aria-label="Main navigation">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
@@ -173,7 +173,7 @@
                 <div class="flex items-center space-x-4">
                     <!-- Language Selector -->
                     <div class="lang-selector">
-                        <button id="lang-toggle" class="flex items-center space-x-1 text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors" aria-label="{{ __('landing.common.select_language') ?? 'Select language' }}">
+                        <button id="lang-toggle" class="flex items-center space-x-1 text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors" aria-label="Select language">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"/>
                             </svg>
@@ -199,7 +199,7 @@
                     </a>
 
                     <!-- Mobile menu button -->
-                    <button id="mobile-menu-toggle" class="md:hidden p-2 rounded-md text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400" aria-label="{{ __('landing.common.menu') ?? 'Menu' }}">
+                    <button id="mobile-menu-toggle" class="md:hidden p-2 rounded-md text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400" aria-label="Menu">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
@@ -244,22 +244,22 @@
 
                 <!-- Links -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">{{ __('landing.footer.links.title') ?? 'Links' }}</h3>
+                    <h3 class="text-lg font-semibold mb-4">Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors">{{ __('landing.footer.links.features') }}</a></li>
-                        <li><a href="#demo" class="text-gray-400 hover:text-white transition-colors">{{ __('landing.footer.links.demo') }}</a></li>
-                        <li><a href="#api" class="text-gray-400 hover:text-white transition-colors">{{ __('landing.footer.links.api') }}</a></li>
-                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">{{ __('landing.footer.links.contact') }}</a></li>
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#demo" class="text-gray-400 hover:text-white transition-colors">Demo</a></li>
+                        <li><a href="#api" class="text-gray-400 hover:text-white transition-colors">API</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
                     </ul>
                 </div>
 
                 <!-- Legal -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">{{ __('landing.footer.legal.title') ?? 'Legal' }}</h3>
+                    <h3 class="text-lg font-semibold mb-4">Legal</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">{{ __('landing.footer.legal.privacy') }}</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">{{ __('landing.footer.legal.terms') }}</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">{{ __('landing.footer.legal.cookies') }}</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Terms</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Cookies</a></li>
                     </ul>
                 </div>
             </div>
