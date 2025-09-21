@@ -11,17 +11,22 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware) {
-        // Register custom middleware
-        $middleware->alias([
-            'SetLocaleFromRequest' => \App\Http\Middleware\SetLocaleFromRequest::class,
-        ]);
-        
-        // Add middleware to API routes
-        $middleware->api(prepend: [
-            \App\Http\Middleware\SetLocaleFromRequest::class,
-        ]);
-    })
+        ->withMiddleware(function (Middleware $middleware) {
+            // Register custom middleware
+            $middleware->alias([
+                'SetLocaleFromRequest' => \App\Http\Middleware\SetLocaleFromRequest::class,
+            ]);
+            
+            // Add middleware to API routes
+            $middleware->api(prepend: [
+                \App\Http\Middleware\SetLocaleFromRequest::class,
+            ]);
+            
+            // Add middleware to web routes (for landing page)
+            $middleware->web(prepend: [
+                \App\Http\Middleware\SetLocaleFromRequest::class,
+            ]);
+        })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
