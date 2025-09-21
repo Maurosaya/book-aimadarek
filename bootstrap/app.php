@@ -12,20 +12,35 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
         then: function () {
-            Route::middleware('tenant')
-                ->prefix('{tenant}')
-                ->group(base_path('routes/tenant.php'));
+            // Tenant routes with automatic domain detection
+            Route::group([], function () {
+                // Check if this is a tenant subdomain
+                $host = request()->getHost();
+                if (str_ends_with($host, '.book.aimadarek.com')) {
+                    $tenantId = str_replace('.book.aimadarek.com', '', $host);
+                    $tenant = \App\Models\Tenant::where('id', $tenantId)->first();
+                    
+                    if ($tenant) {
+                        tenancy()->initialize($tenant);
+                        require base_path('routes/tenant.php');
+                    }
+                }
+            });
         },
     )
         ->withMiddleware(function (Middleware $middleware) {
             // Register custom middleware
             $middleware->alias([
                 'SetLocaleFromRequest' => \App\Http\Middleware\SetLocaleFromRequest::class,
+                'tenant-panel' => \App\Http\Middleware\TenantPanelAuth::class,
+                'super-admin' => \App\Http\Middleware\SuperAdminAuth::class,
+                'tenancy' => \App\Http\Middleware\InitializeTenancyByDomain::class,
             ]);
             
-            // Add locale middleware to all web routes
+            // Add locale and tenancy middleware to all web routes
             $middleware->web(prepend: [
                 \App\Http\Middleware\SetLocaleFromRequest::class,
+                \App\Http\Middleware\InitializeTenancyByDomain::class,
             ]);
             
             // Add locale middleware to API routes

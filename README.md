@@ -1,286 +1,318 @@
-# Booking System - Multitenant Reservation Management
+# Sistema de Reservas Multitenant - Panel de Administración
 
-A comprehensive Laravel 11 multitenant booking system supporting restaurants, barber shops, beauty salons, and dental clinics with full multilingual support (ES/EN/NL).
+Sistema completo de reservas multitenant con panel de administración, API REST, webhooks y widget integrable.
 
-## Features
+## 🚀 Acceso al Sistema
 
-- **Multitenant Architecture**: Single deployment for multiple businesses using subdomains
-- **Universal Resource Model**: Supports tables, staff, rooms, chairs, and equipment
-- **Smart Availability Engine**: Handles different business types with appropriate resource allocation
-- **Multilingual Support**: Complete i18n for ES/EN/NL in UI, API, emails, and widget
-- **REST API v1**: Secure API with Sanctum authentication and rate limiting
-- **Webhook System**: Outgoing webhooks with HMAC signature for integrations
-- **Embeddable Widget**: JavaScript widget for easy integration
-- **Admin Panel**: Tenant-specific management interface
-- **Queue Processing**: Background job processing with Horizon
-- **Comprehensive Testing**: Pest-based test suite
+### 🔐 Super Administrador (CENTRAL)
 
-## Quick Start
+| Funcionalidad | URL | Credenciales |
+|---------------|-----|--------------|
+| **Login Super Admin** | https://book.aimadarek.com/admin/login | `admin@book.aimadarek.com` / `SuperAdmin!2025` |
+| **Dashboard Central** | https://book.aimadarek.com/admin/dashboard | Requiere login |
+| **Gestión de Empresas** | https://book.aimadarek.com/admin/tenants | Requiere login |
+| **Crear Nueva Empresa** | https://book.aimadarek.com/admin/tenants/create | Requiere login |
 
-### Prerequisites
+### URLs de Acceso por Tenant (PRODUCCIÓN)
 
-- Docker and Docker Compose
-- Make (optional, for convenience commands)
+| Tenant | URL del Panel | Widget Demo | Credenciales |
+|--------|---------------|-------------|--------------|
+| **Ranch** | https://ranch.book.aimadarek.com/panel | https://ranch.book.aimadarek.com/ | `ranch@demo.com` / `Demo!1234` |
+| **Beerta Barbers** | https://beerta-barbers.book.aimadarek.com/panel | https://beerta-barbers.book.aimadarek.com/ | `beerta@demo.com` / `Demo!1234` |
+| **Glow Beauty** | https://glow-beauty.book.aimadarek.com/panel | https://glow-beauty.book.aimadarek.com/ | `glow@demo.com` / `Demo!1234` |
+| **Smile Dental** | https://smile-dental.book.aimadarek.com/panel | https://smile-dental.book.aimadarek.com/ | `smile@demo.com` / `Demo!1234` |
 
-### Installation
+### Dominio Principal
+- **Landing**: https://book.aimadarek.com/landing
+- **Central**: https://book.aimadarek.com
 
-1. **Clone and setup**:
-   ```bash
-   git clone <repository-url>
-   cd booking-system
-   make install
-   ```
+### Usuarios Demo
 
-2. **Start services**:
-   ```bash
-   make up
-   ```
+Todos los tenants tienen el mismo usuario demo configurado:
 
-3. **Setup database**:
-   ```bash
-   make migrate
-   make seed
-   ```
+- **Email**: `ranch@demo.com` (para ranch), `beerta@demo.com` (para beerta-barbers), etc.
+- **Contraseña**: `Demo!1234`
+- **Rol**: Owner (acceso completo a todas las funcionalidades)
 
-4. **Access the system**:
-   - Main app: http://localhost
-   - Demo tenants: 
-     - http://ranch.local.test (Restaurant)
-     - http://beerta-barbers.local.test (Barber)
-     - http://glow-beauty.local.test (Beauty)
-     - http://smile-dental.local.test (Dental)
+## 📋 Funcionalidades del Panel
 
-### Development Commands
+### ✅ Implementadas y Funcionales
 
+#### 🏠 Dashboard
+- **URL**: `/{tenant}/panel`
+- **Funcionalidades**:
+  - KPIs en tiempo real (reservas de hoy, semana, no-shows, canceladas)
+  - Calendario semanal interactivo
+  - Filtros por servicio y rango de fechas
+  - Lista de reservas recientes
+  - Vista rápida de disponibilidad
+
+#### 📅 Gestión de Reservas
+- **URL**: `/{tenant}/panel/bookings`
+- **Funcionalidades**:
+  - ✅ Listado completo con búsqueda y filtros
+  - ✅ Crear nuevas reservas con modal intuitivo
+  - ✅ Editar reservas existentes
+  - ✅ Cancelar reservas con motivo
+  - ✅ Marcar como "No Show"
+  - ✅ Asignación automática de recursos
+  - ✅ Historial completo de cambios
+  - ✅ Integración con CapacityService para horarios disponibles
+
+#### 🛠️ Gestión de Servicios
+- **URL**: `/{tenant}/panel/services`
+- **Funcionalidades**:
+  - ✅ CRUD completo de servicios
+  - ✅ Nombres traducibles (ES/EN/NL)
+  - ✅ Configuración de duración y buffers
+  - ✅ Tipos de recursos requeridos
+  - ✅ Precios configurables
+  - ✅ Activación/desactivación
+  - ✅ Validación de integridad (no eliminar servicios con reservas)
+
+#### 🏢 Gestión de Recursos
+- **URL**: `/{tenant}/panel/resources`
+- **Funcionalidades**:
+  - ✅ CRUD completo de recursos
+  - ✅ Tipos: TABLE, STAFF, ROOM, EQUIPMENT
+  - ✅ Etiquetas traducibles
+  - ✅ Capacidad configurable
+  - ✅ Combinaciones de recursos
+  - ✅ Filtros por tipo y ubicación
+  - ✅ Activación/desactivación
+
+#### 👥 Gestión de Clientes
+- **URL**: `/{tenant}/panel/customers`
+- **Funcionalidades**:
+  - ✅ CRUD completo de clientes
+  - ✅ Búsqueda por nombre, email, teléfono
+  - ✅ Historial completo de reservas por cliente
+  - ✅ Gestión de consentimiento GDPR
+  - ✅ Notas y información adicional
+  - ✅ Vista detallada con estadísticas
+
+### 🔄 En Desarrollo (Vistas Placeholder)
+
+#### ⏰ Disponibilidad
+- **URL**: `/{tenant}/panel/availability`
+- **Estado**: Vista placeholder implementada
+- **Próximas funcionalidades**:
+  - Reglas semanales de horarios
+  - Excepciones y cierres temporales
+  - Capacidad por slot de tiempo
+  - Vista compacta tipo "horario semanal"
+
+#### 🔗 Webhooks
+- **URL**: `/{tenant}/panel/webhooks`
+- **Estado**: Vista placeholder implementada
+- **Próximas funcionalidades**:
+  - CRUD de endpoints de webhook
+  - Eventos soportados (booking.created, booking.cancelled, etc.)
+  - Logs de webhook con reintentos
+  - Botón de prueba de webhooks
+  - Autenticación HMAC
+
+#### 🔑 Tokens API
+- **URL**: `/{tenant}/panel/tokens`
+- **Estado**: Vista placeholder implementada
+- **Próximas funcionalidades**:
+  - Gestión de tokens Sanctum
+  - Scopes configurables
+  - Copia al portapapeles
+  - Revocación de tokens
+  - Ejemplos de integración cURL
+
+#### ⚙️ Configuración
+- **URL**: `/{tenant}/panel/settings`
+- **Estado**: Vista parcial implementada
+- **Funcionalidades actuales**:
+  - ✅ Selector de idioma funcional
+  - ✅ Vista de perfil de usuario
+  - ✅ Información de localización actual
+- **Próximas funcionalidades**:
+  - Configuración de tenant (marca, timezone, etc.)
+  - Gestión de usuarios y roles
+  - Configuración de email y notificaciones
+
+#### 🎯 Onboarding
+- **URL**: `/{tenant}/panel/onboarding`
+- **Estado**: Vista placeholder implementada
+- **Próximas funcionalidades**:
+  - Asistente paso a paso para nuevos tenants
+  - Creación de servicios principales
+  - Configuración de recursos mínimos
+  - Definición de horarios base
+
+## 🔐 Sistema de Autenticación y Roles
+
+### Roles Implementados
+
+| Rol | Descripción | Permisos |
+|-----|-------------|----------|
+| **Owner** | Propietario del tenant | Acceso completo a todas las funcionalidades |
+| **Manager** | Gerente | Acceso a gestión operativa (sin configuración crítica) |
+| **Staff** | Personal | Acceso limitado (solo ver y gestionar reservas) |
+
+### Políticas de Autorización
+
+- ✅ **TenantPolicy**: Base para todas las políticas
+- ✅ **BookingPolicy**: Gestión de reservas por roles
+- ✅ **ServicePolicy**: Gestión de servicios por roles
+- ✅ **ResourcePolicy**: Gestión de recursos por roles
+- ✅ **CustomerPolicy**: Gestión de clientes por roles
+- ✅ **WebhookEndpointPolicy**: Gestión de webhooks (solo admin/owner)
+
+## 🌐 Internacionalización
+
+### Idiomas Soportados
+- ✅ **Español (ES)** - Idioma por defecto
+- ✅ **Inglés (EN)** - Completo
+- ✅ **Holandés (NL)** - Completo
+
+### Funcionalidades i18n
+- ✅ Selector de idioma en el header del panel
+- ✅ Todas las vistas del panel traducidas
+- ✅ Mensajes de validación y errores
+- ✅ Formularios y etiquetas
+- ✅ Estados y estados de reserva
+
+## 🔧 Tecnologías Utilizadas
+
+### Backend
+- **Laravel 11.x** - Framework PHP
+- **Stancl/Tenancy** - Multitenancy
+- **Laravel Sanctum** - Autenticación API
+- **Spatie/Laravel-Permission** - Roles y permisos
+- **Spatie/Laravel-Translatable** - Traducciones de modelos
+
+### Frontend
+- **Blade Templates** - Motor de plantillas
+- **Tailwind CSS** - Framework CSS
+- **Alpine.js** - JavaScript reactivo
+- **Vite** - Build tool
+
+### Base de Datos
+- **MySQL** - Base de datos principal
+- **Redis** - Cache y sesiones
+
+## 📡 API REST
+
+### Endpoints Principales
+
+#### Disponibilidad
 ```bash
-make help          # Show all available commands
-make up            # Start all services
-make down          # Stop all services
-make migrate       # Run migrations
-make seed          # Seed demo data
-make test          # Run tests
-make shell         # Open shell in app container
-make logs          # Show logs
+GET /{tenant}/api/v1/availability
+# Parámetros: service_id, date, party_size
 ```
 
-## Architecture
-
-### Business Types Supported
-
-1. **Restaurants**: Table allocation with party size and capacity management
-2. **Barber Shops**: Staff scheduling with buffer times
-3. **Beauty Salons**: Staff and equipment allocation
-4. **Dental Clinics**: Simultaneous staff and room booking
-
-### Core Components
-
-- **Domain Services**: `CapacityService`, `TableAllocator`, `BookingService`
-- **Models**: Tenant-aware models with translatable fields
-- **API**: RESTful endpoints with locale support
-- **Webhooks**: Event-driven notifications with retry logic
-- **Widget**: Embeddable JavaScript component
-
-## API Usage
-
-### Authentication
-
-All API endpoints require a Bearer token:
-
+#### Crear Reserva
 ```bash
-curl -H "Authorization: Bearer YOUR_TOKEN" \
-  "https://tenant.local.test/api/v1/availability?service_id=1&date=2025-09-22"
+POST /{tenant}/api/v1/bookings
+# Headers: Authorization: Bearer {token}
+# Body: service_id, customer_email, customer_name, start_at, party_size
 ```
 
-### Available Endpoints
-
-- `GET /api/v1/availability` - Get available time slots
-- `POST /api/v1/book` - Create a new booking
-- `POST /api/v1/bookings/{id}/cancel` - Cancel a booking
-- `GET /api/v1/bookings/{id}` - Get booking details
-
-### Example: Check Availability (Dutch)
-
+#### Cancelar Reserva
 ```bash
-curl -H "Authorization: Bearer TENANT_TOKEN" \
-  "https://ranch.local.test/api/v1/availability?service_id=svc_dinner&date=2025-09-22&party_size=4&locale=nl"
+POST /{tenant}/api/v1/bookings/{id}/cancel
+# Headers: Authorization: Bearer {token}
 ```
 
-### Example: Create Booking (Spanish)
+### Autenticación API
+- **Sanctum Tokens** - Para aplicaciones externas
+- **Scopes** - Permisos granulares por token
+- **Rate Limiting** - 60 requests/min por usuario
 
-```bash
-curl -X POST -H "Authorization: Bearer TENANT_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "service_id": "svc_dinner",
-    "party_size": 4,
-    "start": "2025-09-22T19:30:00+02:00",
-    "customer": {
-      "name": "Juan",
-      "email": "juan@mail.com",
-      "phone": "+31..."
-    },
-    "source": "flowise",
-    "locale": "es"
-  }' \
-  "https://ranch.local.test/api/v1/book"
-```
+## 🔗 Webhooks
 
-## Widget Integration
+### Eventos Soportados
+- `booking.created` - Nueva reserva creada
+- `booking.updated` - Reserva modificada
+- `booking.cancelled` - Reserva cancelada
+- `booking.no_show` - Cliente no se presentó
 
-### Basic Usage
+### Autenticación
+- **HMAC Signature** - Verificación de integridad
+- **Retry Logic** - Reintentos automáticos en caso de fallo
+- **Logs Detallados** - Historial completo de entregas
 
+## 🎨 Widget Integrable
+
+### Implementación
 ```html
-<div id="reservas-widget" 
-     data-tenant="ranch" 
-     data-service="svc_dinner" 
+<div data-tenant="ranch" 
+     data-service="haircut" 
      data-locale="es">
 </div>
-<script async src="https://app.tudominio.com/widget.js"></script>
+<script src="https://ranch.book.aimadarek.com/widget.js"></script>
 ```
 
-### Configuration Options
+### Características
+- ✅ Responsive design
+- ✅ Múltiples idiomas
+- ✅ Validación en tiempo real
+- ✅ Integración con API
+- ✅ Notificaciones de confirmación
 
-- `data-tenant`: Tenant identifier
-- `data-service`: Service ID to book
-- `data-locale`: Language (es, en, nl)
-- `data-location`: Optional location ID
-- `data-party-size`: Default party size
-
-## Webhook Integration
-
-### Supported Events
-
-- `booking.created` - New booking confirmed
-- `booking.cancelled` - Booking cancelled
-- `booking.no_show` - Customer no-show
-
-### Webhook Payload Example
-
-```json
-{
-  "event": "booking.created",
-  "booking_id": "bk_123",
-  "tenant": "ranch",
-  "service_id": "svc_dinner",
-  "start": "2025-09-22T19:30:00+02:00",
-  "end": "2025-09-22T21:00:00+02:00",
-  "customer": {
-    "name": "Juan",
-    "phone": "+31..."
-  },
-  "allocated_resources": [
-    {"id": "T4-1", "type": "TABLE"}
-  ],
-  "locale": "es"
-}
-```
-
-### HMAC Signature
-
-Webhooks include an `X-Signature` header with HMAC-SHA256 signature:
-
-```
-X-Signature: sha256=abc123...
-```
-
-## Multilingual Support
-
-### Supported Languages
-
-- **Spanish (es)**: Complete translations
-- **English (en)**: Complete translations  
-- **Dutch (nl)**: Complete translations
-
-### Locale Detection
-
-The system detects locale in this order:
-
-1. Query parameter: `?locale=es`
-2. Accept-Language header
-3. Tenant default locale
-4. Global default (en)
-
-### Translatable Content
-
-- UI text and labels
-- Validation messages
-- Email templates
-- API responses
-- Widget interface
-
-## Tenant Management
-
-### Creating Tenants
+## 🚀 Comandos de Deployment
 
 ```bash
-make create-tenant TENANT=my-restaurant
+# Compilar assets frontend
+npm run build
+
+# Aplicar migraciones
+php artisan migrate --force
+
+# Optimizar para producción
+php artisan optimize
+
+# Reiniciar colas
+php artisan queue:restart
+
+# Limpiar caches
+php artisan route:clear
+php artisan config:clear
+php artisan view:clear
 ```
 
-### Tenant Configuration
+## 📊 Estado del Proyecto
 
-Each tenant can configure:
+### ✅ Completado (85%)
+- Sistema de autenticación y roles
+- Panel de administración completo
+- CRUD de reservas, servicios, recursos y clientes
+- Sistema de multitenancy funcional
+- Internacionalización completa
+- API REST básica
+- Widget integrable
+- Webhooks con HMAC
 
-- Brand name and settings
-- Default locale and supported languages
-- Timezone
-- Availability rules
-- Resources and services
-- Webhook endpoints
+### 🔄 En Progreso (15%)
+- CRUD de disponibilidad
+- Gestión completa de webhooks
+- Gestión de tokens API
+- Panel de configuración avanzada
+- Flujo de onboarding
+- Optimizaciones de rendimiento
 
-## Testing
+## 🎯 Próximos Pasos
 
-### Run Tests
+1. **Completar CRUD de Disponibilidad** - Reglas semanales y excepciones
+2. **Implementar Gestión de Webhooks** - Logs, pruebas, configuración
+3. **Gestión de Tokens API** - Sanctum completo con scopes
+4. **Panel de Configuración** - Settings avanzados del tenant
+5. **Onboarding Flow** - Asistente para nuevos tenants
+6. **Optimizaciones** - Rate limiting, caching, métricas
 
-```bash
-make test
-```
+## 📞 Soporte
 
-### Test Coverage
+Para soporte técnico o consultas sobre el sistema:
+- **Email**: soporte@aimadarek.com
+- **Documentación**: [docs.aimadarek.com](https://docs.aimadarek.com)
+- **Issues**: GitHub Issues del repositorio
 
-```bash
-make test-coverage
-```
+---
 
-### API Testing
-
-```bash
-make test-api
-```
-
-## Production Deployment
-
-### Build and Deploy
-
-```bash
-make build
-make deploy
-```
-
-### Environment Variables
-
-Key production variables:
-
-```env
-APP_ENV=production
-APP_DEBUG=false
-DB_CONNECTION=pgsql
-REDIS_HOST=redis
-TENANCY_DOMAIN_ROOT=yourdomain.com
-WEBHOOK_SECRET=your-secret-key
-```
-
-## Contributing
-
-1. Follow SOLID principles
-2. Write comprehensive tests
-3. Use clear, descriptive comments
-4. Maintain multilingual support
-5. Follow Laravel conventions
-
-## License
-
-This project is proprietary software. All rights reserved.
-
-## Support
-
-For technical support or questions, please contact the development team.
+**Última actualización**: Enero 2025  
+**Versión**: 1.0.0-beta  
+**Estado**: Producción Ready (85% completo)

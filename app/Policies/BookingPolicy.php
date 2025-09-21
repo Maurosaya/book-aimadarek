@@ -4,36 +4,24 @@ namespace App\Policies;
 
 use App\Models\Booking;
 use App\Models\User;
-use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Support\Facades\Tenancy;
 
 /**
  * Booking Policy
  * 
- * Ensures that only the tenant owner can access their bookings
- * Implements tenant isolation for booking resources
+ * Manages access control for booking resources within tenant context
+ * Staff can view and create bookings, managers can edit, owners can delete
  */
-class BookingPolicy
+class BookingPolicy extends TenantPolicy
 {
-    use HandlesAuthorization;
-
-    /**
-     * Determine whether the user can view any bookings.
-     */
-    public function viewAny(User $user): bool
-    {
-        // Only allow if user belongs to the current tenant
-        return $this->belongsToCurrentTenant($user);
-    }
 
     /**
      * Determine whether the user can view the booking.
      */
     public function view(User $user, Booking $booking): bool
     {
-        // Check if user belongs to current tenant and booking belongs to same tenant
-        return $this->belongsToCurrentTenant($user) && 
-               $this->bookingBelongsToCurrentTenant($booking);
+        // All staff can view bookings in their tenant
+        return $this->canAccessCurrentTenant($user) && 
+               $this->resourceBelongsToCurrentTenant($booking);
     }
 
     /**
@@ -41,28 +29,28 @@ class BookingPolicy
      */
     public function create(User $user): bool
     {
-        // Allow creation if user belongs to current tenant
-        return $this->belongsToCurrentTenant($user);
+        // All staff can create bookings
+        return $this->canAccessCurrentTenant($user);
     }
 
     /**
      * Determine whether the user can update the booking.
      */
-    public function update(User $user, Booking $booking): bool
+    public function update(User $user, $booking): bool
     {
-        // Check if user belongs to current tenant and booking belongs to same tenant
-        return $this->belongsToCurrentTenant($user) && 
-               $this->bookingBelongsToCurrentTenant($booking);
+        // Managers and owners can edit bookings
+        return $this->isAdminOfCurrentTenant($user) && 
+               $this->resourceBelongsToCurrentTenant($booking);
     }
 
     /**
      * Determine whether the user can delete the booking.
      */
-    public function delete(User $user, Booking $booking): bool
+    public function delete(User $user, $booking): bool
     {
-        // Check if user belongs to current tenant and booking belongs to same tenant
-        return $this->belongsToCurrentTenant($user) && 
-               $this->bookingBelongsToCurrentTenant($booking);
+        // Only owners can delete bookings
+        return $this->isOwnerOfCurrentTenant($user) && 
+               $this->resourceBelongsToCurrentTenant($booking);
     }
 
     /**
@@ -70,46 +58,18 @@ class BookingPolicy
      */
     public function cancel(User $user, Booking $booking): bool
     {
-        // Check if user belongs to current tenant and booking belongs to same tenant
-        return $this->belongsToCurrentTenant($user) && 
-               $this->bookingBelongsToCurrentTenant($booking);
+        // Managers and owners can cancel bookings
+        return $this->isAdminOfCurrentTenant($user) && 
+               $this->resourceBelongsToCurrentTenant($booking);
     }
 
     /**
-     * Check if user belongs to the current tenant
+     * Determine whether the user can mark booking as no-show.
      */
-    private function belongsToCurrentTenant(User $user): bool
+    public function markNoShow(User $user, Booking $booking): bool
     {
-        if (!tenancy()->initialized) {
-            return false;
-        }
-
-        $currentTenant = tenancy()->tenant;
-        
-        if (!$currentTenant) {
-            return false;
-        }
-
-        // Check if user's tenant_id matches current tenant
-        return $user->tenant_id === $currentTenant->id;
-    }
-
-    /**
-     * Check if booking belongs to the current tenant
-     */
-    private function bookingBelongsToCurrentTenant(Booking $booking): bool
-    {
-        if (!tenancy()->initialized) {
-            return false;
-        }
-
-        $currentTenant = tenancy()->tenant;
-        
-        if (!$currentTenant) {
-            return false;
-        }
-
-        // Check if booking's tenant_id matches current tenant
-        return $booking->tenant_id === $currentTenant->id;
+        // All staff can mark no-show
+        return $this->canAccessCurrentTenant($user) && 
+               $this->resourceBelongsToCurrentTenant($booking);
     }
 }

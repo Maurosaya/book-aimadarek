@@ -507,6 +507,9 @@ class DatabaseSeeder extends Seeder
             'email' => $email,
             'password' => Hash::make('Demo!1234'),
             'email_verified_at' => now(),
+            'tenant_id' => $tenant->id,
+            'role' => User::ROLE_OWNER,
+            'active' => true,
         ]);
     }
     

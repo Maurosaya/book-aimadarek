@@ -4,18 +4,22 @@ namespace App\Policies;
 
 use App\Models\WebhookEndpoint;
 use App\Models\User;
-use Illuminate\Auth\Access\HandlesAuthorization;
 
-class WebhookEndpointPolicy
+/**
+ * Webhook Endpoint Policy
+ * 
+ * Manages access control for webhook endpoint resources within tenant context
+ * Only managers and owners can manage webhooks
+ */
+class WebhookEndpointPolicy extends TenantPolicy
 {
-    use HandlesAuthorization;
-
     /**
      * Determine whether the user can view any webhook endpoints.
      */
     public function viewAny(User $user): bool
     {
-        return $this->belongsToCurrentTenant($user);
+        // All staff can view webhooks
+        return $this->canAccessCurrentTenant($user);
     }
 
     /**
@@ -23,8 +27,9 @@ class WebhookEndpointPolicy
      */
     public function view(User $user, WebhookEndpoint $webhookEndpoint): bool
     {
-        return $this->belongsToCurrentTenant($user) && 
-               $this->endpointBelongsToCurrentTenant($webhookEndpoint);
+        // All staff can view webhooks
+        return $this->canAccessCurrentTenant($user) && 
+               $this->resourceBelongsToCurrentTenant($webhookEndpoint);
     }
 
     /**
@@ -32,63 +37,37 @@ class WebhookEndpointPolicy
      */
     public function create(User $user): bool
     {
-        return $this->belongsToCurrentTenant($user) && 
-               $user->hasRole(['owner', 'manager']);
+        // Only managers and owners can create webhooks
+        return $this->isAdminOfCurrentTenant($user);
     }
 
     /**
      * Determine whether the user can update the webhook endpoint.
      */
-    public function update(User $user, WebhookEndpoint $webhookEndpoint): bool
+    public function update(User $user, $webhookEndpoint): bool
     {
-        return $this->belongsToCurrentTenant($user) && 
-               $this->endpointBelongsToCurrentTenant($webhookEndpoint) &&
-               $user->hasRole(['owner', 'manager']);
+        // Only managers and owners can update webhooks
+        return $this->isAdminOfCurrentTenant($user) && 
+               $this->resourceBelongsToCurrentTenant($webhookEndpoint);
     }
 
     /**
      * Determine whether the user can delete the webhook endpoint.
      */
-    public function delete(User $user, WebhookEndpoint $webhookEndpoint): bool
+    public function delete(User $user, $webhookEndpoint): bool
     {
-        return $this->belongsToCurrentTenant($user) && 
-               $this->endpointBelongsToCurrentTenant($webhookEndpoint) &&
-               $user->hasRole(['owner', 'manager']);
+        // Only owners can delete webhooks
+        return $this->isOwnerOfCurrentTenant($user) && 
+               $this->resourceBelongsToCurrentTenant($webhookEndpoint);
     }
 
     /**
-     * Check if user belongs to the current tenant
+     * Determine whether the user can test the webhook endpoint.
      */
-    private function belongsToCurrentTenant(User $user): bool
+    public function test(User $user, WebhookEndpoint $webhookEndpoint): bool
     {
-        if (!tenancy()->initialized) {
-            return false;
-        }
-
-        $currentTenant = tenancy()->tenant;
-        
-        if (!$currentTenant) {
-            return false;
-        }
-
-        return $user->tenant_id === $currentTenant->id;
-    }
-
-    /**
-     * Check if webhook endpoint belongs to the current tenant
-     */
-    private function endpointBelongsToCurrentTenant(WebhookEndpoint $webhookEndpoint): bool
-    {
-        if (!tenancy()->initialized) {
-            return false;
-        }
-
-        $currentTenant = tenancy()->tenant;
-        
-        if (!$currentTenant) {
-            return false;
-        }
-
-        return $webhookEndpoint->tenant_id === $currentTenant->id;
+        // Managers and owners can test webhooks
+        return $this->isAdminOfCurrentTenant($user) && 
+               $this->resourceBelongsToCurrentTenant($webhookEndpoint);
     }
 }

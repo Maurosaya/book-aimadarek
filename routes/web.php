@@ -4,6 +4,9 @@ use App\Http\Controllers\Landing\HomeController;
 use App\Http\Controllers\LandingController;
 use Illuminate\Support\Facades\Route;
 
+// Include admin routes
+Route::prefix('')->group(base_path('routes/admin.php'));
+
 // Landing page route
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 

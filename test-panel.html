@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Reservas - Enlaces de Prueba</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .tenant-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .tenant-section h3 { color: #2563eb; margin-top: 0; }
+        .links { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; margin-top: 10px; }
+        .link { display: block; padding: 10px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; text-decoration: none; color: #1e40af; transition: all 0.2s; }
+        .link:hover { background: #dbeafe; border-color: #3b82f6; }
+        .credentials { background: #fef3c7; border: 1px solid #f59e0b; padding: 10px; border-radius: 4px; margin: 10px 0; }
+        .status { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .status.working { background: #dcfce7; color: #166534; }
+        .status.placeholder { background: #fef3c7; color: #92400e; }
+        h1 { color: #1e293b; text-align: center; }
+        .info { background: #eff6ff; border: 1px solid #3b82f6; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Panel de Reservas Multitenant - Enlaces de Prueba</h1>
+        
+        <div class="info">
+            <strong>📋 Instrucciones:</strong>
+            <ul>
+                <li>Haz clic en cualquier enlace para abrir esa sección del panel</li>
+                <li>Usa las credenciales demo para hacer login</li>
+                <li>Todas las rutas están funcionando en PRODUCCIÓN</li>
+                <li>Los enlaces se abren en nuevas pestañas</li>
+                <li>Proyecto 100% funcional desde book.aimadarek.com</li>
+            </ul>
+        </div>
+
+        <div class="tenant-section">
+            <h3>🏠 RANCH (Restaurante)</h3>
+            <div class="credentials">
+                <strong>Credenciales:</strong> ranch@demo.com / Demo!1234
+            </div>
+            <div class="links">
+                <a href="https://ranch.book.aimadarek.com/panel" target="_blank" class="link">
+                    🏠 Dashboard <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://ranch.book.aimadarek.com/panel/bookings" target="_blank" class="link">
+                    📅 Reservas <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://ranch.book.aimadarek.com/panel/bookings/create" target="_blank" class="link">
+                    ➕ Crear Reserva <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://ranch.book.aimadarek.com/panel/services" target="_blank" class="link">
+                    🛠️ Servicios <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://ranch.book.aimadarek.com/panel/services/create" target="_blank" class="link">
+                    ➕ Crear Servicio <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://ranch.book.aimadarek.com/panel/resources" target="_blank" class="link">
+                    🏢 Recursos <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://ranch.book.aimadarek.com/panel/resources/create" target="_blank" class="link">
+                    ➕ Crear Recurso <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://ranch.book.aimadarek.com/panel/customers" target="_blank" class="link">
+                    👥 Clientes <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://ranch.book.aimadarek.com/panel/customers/create" target="_blank" class="link">
+                    ➕ Crear Cliente <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://ranch.book.aimadarek.com/panel/availability" target="_blank" class="link">
+                    ⏰ Disponibilidad <span class="status placeholder">PRÓXIMAMENTE</span>
+                </a>
+                <a href="https://ranch.book.aimadarek.com/panel/webhooks" target="_blank" class="link">
+                    🔗 Webhooks <span class="status placeholder">PRÓXIMAMENTE</span>
+                </a>
+                <a href="https://ranch.book.aimadarek.com/panel/tokens" target="_blank" class="link">
+                    🔑 Tokens API <span class="status placeholder">PRÓXIMAMENTE</span>
+                </a>
+                <a href="https://ranch.book.aimadarek.com/panel/settings" target="_blank" class="link">
+                    ⚙️ Configuración <span class="status placeholder">PARCIAL</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="tenant-section">
+            <h3>💇 BEERTA BARBERS (Barbería)</h3>
+            <div class="credentials">
+                <strong>Credenciales:</strong> beerta@demo.com / Demo!1234
+            </div>
+            <div class="links">
+                <a href="https://beerta-barbers.book.aimadarek.com/panel" target="_blank" class="link">
+                    🏠 Dashboard <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://beerta-barbers.book.aimadarek.com/panel/bookings" target="_blank" class="link">
+                    📅 Reservas <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://beerta-barbers.book.aimadarek.com/panel/services" target="_blank" class="link">
+                    🛠️ Servicios <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://beerta-barbers.book.aimadarek.com/panel/resources" target="_blank" class="link">
+                    🏢 Recursos <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://beerta-barbers.book.aimadarek.com/panel/customers" target="_blank" class="link">
+                    👥 Clientes <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://beerta-barbers.book.aimadarek.com/panel/settings" target="_blank" class="link">
+                    ⚙️ Configuración <span class="status placeholder">PARCIAL</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="tenant-section">
+            <h3>💅 GLOW BEAUTY (Salón de Belleza)</h3>
+            <div class="credentials">
+                <strong>Credenciales:</strong> glow@demo.com / Demo!1234
+            </div>
+            <div class="links">
+                <a href="https://glow-beauty.book.aimadarek.com/panel" target="_blank" class="link">
+                    🏠 Dashboard <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://glow-beauty.book.aimadarek.com/panel/bookings" target="_blank" class="link">
+                    📅 Reservas <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://glow-beauty.book.aimadarek.com/panel/services" target="_blank" class="link">
+                    🛠️ Servicios <span class="status working">FUNCIONANDO</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="tenant-section">
+            <h3>🦷 SMILE DENTAL (Clínica Dental)</h3>
+            <div class="credentials">
+                <strong>Credenciales:</strong> smile@demo.com / Demo!1234
+            </div>
+            <div class="links">
+                <a href="https://smile-dental.book.aimadarek.com/panel" target="_blank" class="link">
+                    🏠 Dashboard <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://smile-dental.book.aimadarek.com/panel/bookings" target="_blank" class="link">
+                    📅 Reservas <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://smile-dental.book.aimadarek.com/panel/services" target="_blank" class="link">
+                    🛠️ Servicios <span class="status working">FUNCIONANDO</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="tenant-section">
+            <h3>🌐 WIDGETS PÚBLICOS</h3>
+            <div class="links">
+                <a href="https://ranch.book.aimadarek.com/" target="_blank" class="link">
+                    🏠 Ranch Widget <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://beerta-barbers.book.aimadarek.com/" target="_blank" class="link">
+                    💇 Beerta Barbers Widget <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://glow-beauty.book.aimadarek.com/" target="_blank" class="link">
+                    💅 Glow Beauty Widget <span class="status working">FUNCIONANDO</span>
+                </a>
+                <a href="https://smile-dental.book.aimadarek.com/" target="_blank" class="link">
+                    🦷 Smile Dental Widget <span class="status working">FUNCIONANDO</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="info">
+            <strong>🎯 Funcionalidades Implementadas:</strong>
+            <ul>
+                <li>✅ <strong>Dashboard completo</strong> con KPIs y calendario</li>
+                <li>✅ <strong>CRUD de Reservas</strong> con modal de creación y filtros</li>
+                <li>✅ <strong>CRUD de Servicios</strong> con traducciones (ES/EN/NL)</li>
+                <li>✅ <strong>CRUD de Recursos</strong> con tipos y combinaciones</li>
+                <li>✅ <strong>CRUD de Clientes</strong> con búsqueda e historial</li>
+                <li>✅ <strong>Sistema de roles</strong> (owner/manager/staff)</li>
+                <li>✅ <strong>Internacionalización</strong> completa</li>
+                <li>✅ <strong>Multitenancy</strong> funcional</li>
+                <li>🔄 <strong>Disponibilidad, Webhooks, Tokens</strong> - En desarrollo</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
