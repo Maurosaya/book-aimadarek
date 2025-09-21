@@ -554,4 +554,27 @@ class SuperAdminController extends Controller
         
         return round($bytes, $precision) . ' ' . $units[$i];
     }
+
+    // ==================== LANGUAGE MANAGEMENT ====================
+
+    /**
+     * Change the application language
+     */
+    public function changeLanguage($locale)
+    {
+        // Validate locale
+        $supportedLocales = ['es', 'en', 'nl'];
+        
+        if (!in_array($locale, $supportedLocales)) {
+            return redirect()->back()->withErrors(['error' => 'Unsupported language.']);
+        }
+
+        // Set the locale in session
+        session(['admin_locale' => $locale]);
+        
+        // Set the application locale
+        app()->setLocale($locale);
+
+        return redirect()->back()->with('success', __('admin.language.language_changed'));
+    }
 }

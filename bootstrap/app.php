@@ -35,6 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 'tenant-panel' => \App\Http\Middleware\TenantPanelAuth::class,
                 'super-admin' => \App\Http\Middleware\SuperAdminAuth::class,
                 'tenancy' => \App\Http\Middleware\InitializeTenancyByDomain::class,
+                'admin-locale' => \App\Http\Middleware\AdminLocaleMiddleware::class,
             ]);
             
             // Add locale and tenancy middleware to all web routes

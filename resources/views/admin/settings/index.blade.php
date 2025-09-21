@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Configuración del Sistema - Super Admin')
+@section('title', __('admin.settings.title'))
 
 @section('content')
 <div class="py-6">
@@ -9,9 +9,9 @@
         <div class="md:flex md:items-center md:justify-between mb-8">
             <div class="flex-1 min-w-0">
                 <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-                    Configuración del Sistema
+                    {{ __('admin.settings.title') }}
                 </h2>
-                <p class="mt-1 text-sm text-gray-500">Gestiona la configuración global del sistema multitenant</p>
+                <p class="mt-1 text-sm text-gray-500">{{ __('admin.settings.subtitle') }}</p>
             </div>
         </div>
 
@@ -28,7 +28,7 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Total Empresas</dt>
+                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('admin.dashboard.stats.total_companies') }}</dt>
                                 <dd class="text-lg font-medium text-gray-900">{{ $system_stats['total_tenants'] }}</dd>
                             </dl>
                         </div>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Empresas Activas</dt>
+                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('admin.dashboard.stats.active_companies') }}</dt>
                                 <dd class="text-lg font-medium text-gray-900">{{ $system_stats['active_tenants'] }}</dd>
                             </dl>
                         </div>
@@ -66,7 +66,7 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Total Usuarios</dt>
+                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('admin.dashboard.stats.total_users') }}</dt>
                                 <dd class="text-lg font-medium text-gray-900">{{ $system_stats['total_users'] }}</dd>
                             </dl>
                         </div>
@@ -85,7 +85,7 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Total Reservas</dt>
+                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('admin.dashboard.stats.total_bookings') }}</dt>
                                 <dd class="text-lg font-medium text-gray-900">{{ $system_stats['total_bookings'] }}</dd>
                             </dl>
                         </div>
@@ -98,8 +98,8 @@
             <!-- System Settings -->
             <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:px-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">Configuración del Sistema</h3>
-                    <p class="mt-1 max-w-2xl text-sm text-gray-500">Ajustes globales del sistema</p>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('admin.settings.system_settings') }}</h3>
+                    <p class="mt-1 max-w-2xl text-sm text-gray-500">{{ __('admin.settings.subtitle') }}</p>
                 </div>
                 <form method="POST" action="{{ route('admin.settings.update') }}">
                     @csrf
@@ -109,8 +109,8 @@
                             <!-- Maintenance Mode -->
                             <div class="flex items-center justify-between">
                                 <div class="flex-1">
-                                    <h4 class="text-sm font-medium text-gray-900">Modo de Mantenimiento</h4>
-                                    <p class="text-sm text-gray-500">Activa el modo de mantenimiento para realizar actualizaciones</p>
+                                    <h4 class="text-sm font-medium text-gray-900">{{ __('admin.settings.maintenance_mode') }}</h4>
+                                    <p class="text-sm text-gray-500">{{ __('admin.settings.maintenance_description') }}</p>
                                 </div>
                                 <div class="ml-4">
                                     <input type="checkbox" 
@@ -123,7 +123,7 @@
                             <!-- Max Tenants -->
                             <div>
                                 <label for="max_tenants" class="block text-sm font-medium text-gray-700">
-                                    Límite de Empresas
+                                    {{ __('admin.settings.max_tenants') }}
                                 </label>
                                 <div class="mt-1">
                                     <input type="number" 
@@ -133,21 +133,21 @@
                                            min="1"
                                            class="shadow-sm focus:ring-red-500 focus:border-red-500 block w-full sm:text-sm border-gray-300 rounded-md">
                                 </div>
-                                <p class="mt-1 text-sm text-gray-500">Número máximo de empresas permitidas</p>
+                                <p class="mt-1 text-sm text-gray-500">{{ __('admin.settings.max_tenants_description') }}</p>
                             </div>
 
                             <!-- Backup Frequency -->
                             <div>
                                 <label for="backup_frequency" class="block text-sm font-medium text-gray-700">
-                                    Frecuencia de Respaldo
+                                    {{ __('admin.settings.backup_frequency') }}
                                 </label>
                                 <div class="mt-1">
                                     <select name="backup_frequency" 
                                             id="backup_frequency"
                                             class="shadow-sm focus:ring-red-500 focus:border-red-500 block w-full sm:text-sm border-gray-300 rounded-md">
-                                        <option value="daily">Diario</option>
-                                        <option value="weekly" selected>Semanal</option>
-                                        <option value="monthly">Mensual</option>
+                                        <option value="daily">{{ __('admin.settings.daily') }}</option>
+                                        <option value="weekly" selected>{{ __('admin.settings.weekly') }}</option>
+                                        <option value="monthly">{{ __('admin.settings.monthly') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -155,8 +155,8 @@
                             <!-- Email Notifications -->
                             <div class="flex items-center justify-between">
                                 <div class="flex-1">
-                                    <h4 class="text-sm font-medium text-gray-900">Notificaciones por Email</h4>
-                                    <p class="text-sm text-gray-500">Recibir notificaciones sobre eventos del sistema</p>
+                                    <h4 class="text-sm font-medium text-gray-900">{{ __('admin.settings.email_notifications') }}</h4>
+                                    <p class="text-sm text-gray-500">{{ __('admin.settings.email_notifications_description') }}</p>
                                 </div>
                                 <div class="ml-4">
                                     <input type="checkbox" 
@@ -171,7 +171,7 @@
                         <div class="mt-6">
                             <button type="submit" 
                                     class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                Guardar Configuración
+                                {{ __('admin.settings.save_settings') }}
                             </button>
                         </div>
                     </div>
@@ -181,41 +181,41 @@
             <!-- System Information -->
             <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:px-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">Información del Sistema</h3>
-                    <p class="mt-1 max-w-2xl text-sm text-gray-500">Estado actual del servidor</p>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('admin.settings.system_information') }}</h3>
+                    <p class="mt-1 max-w-2xl text-sm text-gray-500">{{ __('admin.settings.subtitle') }}</p>
                 </div>
                 <div class="border-t border-gray-200">
                     <dl>
                         <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-sm font-medium text-gray-500">Tiempo de Actividad</dt>
+                            <dt class="text-sm font-medium text-gray-500">{{ __('admin.settings.system_uptime') }}</dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $system_stats['system_uptime'] }}</dd>
                         </div>
                         <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-sm font-medium text-gray-500">Uso de Disco</dt>
+                            <dt class="text-sm font-medium text-gray-500">{{ __('admin.settings.disk_usage') }}</dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                 {{ $system_stats['disk_usage']['used'] }} / {{ $system_stats['disk_usage']['total'] }}
                                 <div class="mt-1 w-full bg-gray-200 rounded-full h-2">
                                     <div class="bg-red-600 h-2 rounded-full" style="width: {{ $system_stats['disk_usage']['percentage'] }}%"></div>
                                 </div>
-                                <span class="text-xs text-gray-500">{{ $system_stats['disk_usage']['percentage'] }}% usado</span>
+                                <span class="text-xs text-gray-500">{{ $system_stats['disk_usage']['percentage'] }}% {{ __('admin.settings.used') }}</span>
                             </dd>
                         </div>
                         <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-sm font-medium text-gray-500">Uso de Memoria</dt>
+                            <dt class="text-sm font-medium text-gray-500">{{ __('admin.settings.memory_usage') }}</dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                 {{ $system_stats['memory_usage']['used'] }} / {{ $system_stats['memory_usage']['total'] }}
                                 <div class="mt-1 w-full bg-gray-200 rounded-full h-2">
                                     <div class="bg-blue-600 h-2 rounded-full" style="width: {{ $system_stats['memory_usage']['percentage'] }}%"></div>
                                 </div>
-                                <span class="text-xs text-gray-500">{{ $system_stats['memory_usage']['percentage'] }}% usado</span>
+                                <span class="text-xs text-gray-500">{{ $system_stats['memory_usage']['percentage'] }}% {{ __('admin.settings.used') }}</span>
                             </dd>
                         </div>
                         <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-sm font-medium text-gray-500">Versión PHP</dt>
+                            <dt class="text-sm font-medium text-gray-500">{{ __('admin.settings.php_version') }}</dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ PHP_VERSION }}</dd>
                         </div>
                         <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-sm font-medium text-gray-500">Versión Laravel</dt>
+                            <dt class="text-sm font-medium text-gray-500">{{ __('admin.settings.laravel_version') }}</dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ app()->version() }}</dd>
                         </div>
                     </dl>
@@ -227,8 +227,8 @@
         <div class="mt-8">
             <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:px-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">Acciones Rápidas</h3>
-                    <p class="mt-1 max-w-2xl text-sm text-gray-500">Herramientas de administración del sistema</p>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('admin.settings.quick_actions') }}</h3>
+                    <p class="mt-1 max-w-2xl text-sm text-gray-500">{{ __('admin.settings.subtitle') }}</p>
                 </div>
                 <div class="border-t border-gray-200 px-4 py-5 sm:p-6">
                     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -245,9 +245,9 @@
                             <div class="mt-4">
                                 <h3 class="text-lg font-medium">
                                     <span class="absolute inset-0" aria-hidden="true"></span>
-                                    Respaldo
+                                    {{ __('admin.settings.backup') }}
                                 </h3>
-                                <p class="mt-2 text-sm text-gray-500">Crear y gestionar respaldos del sistema</p>
+                                <p class="mt-2 text-sm text-gray-500">{{ __('admin.settings.backup_management') }}</p>
                             </div>
                         </a>
 
@@ -264,9 +264,9 @@
                             <div class="mt-4">
                                 <h3 class="text-lg font-medium">
                                     <span class="absolute inset-0" aria-hidden="true"></span>
-                                    Limpiar Cache
+                                    {{ __('admin.settings.clear_cache') }}
                                 </h3>
-                                <p class="mt-2 text-sm text-gray-500">Limpiar cache del sistema</p>
+                                <p class="mt-2 text-sm text-gray-500">{{ __('admin.settings.clear_cache') }}</p>
                             </div>
                         </button>
 
@@ -283,9 +283,9 @@
                             <div class="mt-4">
                                 <h3 class="text-lg font-medium">
                                     <span class="absolute inset-0" aria-hidden="true"></span>
-                                    Logs del Sistema
+                                    {{ __('admin.settings.system_logs') }}
                                 </h3>
-                                <p class="mt-2 text-sm text-gray-500">Ver logs de errores y actividad</p>
+                                <p class="mt-2 text-sm text-gray-500">{{ __('admin.settings.system_logs') }}</p>
                             </div>
                         </a>
 
@@ -302,9 +302,9 @@
                             <div class="mt-4">
                                 <h3 class="text-lg font-medium">
                                     <span class="absolute inset-0" aria-hidden="true"></span>
-                                    Mantenimiento
+                                    {{ __('admin.settings.maintenance') }}
                                 </h3>
-                                <p class="mt-2 text-sm text-gray-500">Activar modo de mantenimiento</p>
+                                <p class="mt-2 text-sm text-gray-500">{{ __('admin.settings.maintenance_mode') }}</p>
                             </div>
                         </button>
                     </div>
@@ -316,16 +316,16 @@
 
 <script>
 function clearCache() {
-    if (confirm('¿Estás seguro de que quieres limpiar el cache del sistema?')) {
+    if (confirm('{{ __('admin.settings.clear_cache_confirmation') }}')) {
         // Aquí implementarías la llamada AJAX para limpiar el cache
-        alert('Cache limpiado exitosamente');
+        alert('{{ __('admin.notifications.cache_cleared') }}');
     }
 }
 
 function toggleMaintenance() {
-    if (confirm('¿Estás seguro de que quieres activar el modo de mantenimiento?')) {
+    if (confirm('{{ __('admin.settings.maintenance_mode') }}?')) {
         // Aquí implementarías la llamada AJAX para activar mantenimiento
-        alert('Modo de mantenimiento activado');
+        alert('{{ __('admin.notifications.maintenance_activated') }}');
     }
 }
 </script>

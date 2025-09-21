@@ -24,10 +24,10 @@
                     </svg>
                 </div>
                 <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    Super Administrador
+                    {{ __('admin.auth.login_title') }}
                 </h2>
                 <p class="mt-2 text-center text-sm text-gray-600">
-                    Sistema de Gestión de Empresas
+                    {{ __('admin.auth.login_subtitle') }}
                 </p>
             </div>
             
@@ -38,7 +38,7 @@
                         <label for="email" class="sr-only">Email</label>
                         <input id="email" name="email" type="email" autocomplete="email" required 
                                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm @error('email') border-red-500 @enderror" 
-                               placeholder="Email" value="{{ old('email') }}">
+                               placeholder="{{ __('admin.auth.email') }}" value="{{ old('email') }}">
                         @error('email')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -47,7 +47,7 @@
                         <label for="password" class="sr-only">Contraseña</label>
                         <input id="password" name="password" type="password" autocomplete="current-password" required 
                                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm @error('password') border-red-500 @enderror" 
-                               placeholder="Contraseña">
+                               placeholder="{{ __('admin.auth.password') }}">
                         @error('password')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -62,7 +62,7 @@
                                 <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
                             </svg>
                         </span>
-                        Iniciar Sesión
+                        {{ __('admin.auth.login_button') }}
                     </button>
                 </div>
 
@@ -75,11 +75,11 @@
                         </div>
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-blue-800">
-                                Credenciales Demo
+                                {{ __('admin.auth.demo_credentials') }}
                             </h3>
                             <div class="mt-2 text-sm text-blue-700">
-                                <p><strong>Email:</strong> admin@book.aimadarek.com</p>
-                                <p><strong>Contraseña:</strong> SuperAdmin!2025</p>
+                                <p><strong>{{ __('admin.auth.email') }}:</strong> {{ __('admin.auth.demo_email') }}</p>
+                                <p><strong>{{ __('admin.auth.password') }}:</strong> {{ __('admin.auth.demo_password') }}</p>
                             </div>
                         </div>
                     </div>

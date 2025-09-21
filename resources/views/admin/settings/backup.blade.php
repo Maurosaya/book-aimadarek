@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Gestión de Respaldos - Super Admin')
+@section('title', __('admin.backup.title') . ' - Super Admin')
 
 @section('content')
 <div class="py-6">
@@ -16,7 +16,7 @@
                                     <svg class="flex-shrink-0 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                                     </svg>
-                                    <span class="sr-only">Configuración</span>
+                                    <span class="sr-only">{{ __('admin.nav.settings') }}</span>
                                 </a>
                             </div>
                         </li>
@@ -25,7 +25,7 @@
                                 <svg class="flex-shrink-0 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                                 </svg>
-                                <a href="{{ route('admin.settings.index') }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700">Configuración</a>
+                                <a href="{{ route('admin.settings.index') }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700">{{ __('admin.nav.settings') }}</a>
                             </div>
                         </li>
                         <li>
@@ -33,15 +33,15 @@
                                 <svg class="flex-shrink-0 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                                 </svg>
-                                <span class="ml-4 text-sm font-medium text-gray-500">Respaldos</span>
+                                <span class="ml-4 text-sm font-medium text-gray-500">{{ __('admin.backup.backups') }}</span>
                             </div>
                         </li>
                     </ol>
                 </nav>
                 <h2 class="mt-2 text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-                    Gestión de Respaldos
+                    {{ __('admin.backup.backup_management_title') }}
                 </h2>
-                <p class="mt-1 text-sm text-gray-500">Crea y gestiona respaldos del sistema</p>
+                <p class="mt-1 text-sm text-gray-500">{{ __('admin.backup.backup_management_subtitle') }}</p>
             </div>
             <div class="mt-4 flex md:mt-0 md:ml-4">
                 <form method="POST" action="{{ route('admin.settings.backup.create') }}" class="inline">
@@ -51,7 +51,7 @@
                         <svg class="-ml-1 mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" clip-rule="evenodd" />
                         </svg>
-                        Crear Respaldo
+                        {{ __('admin.backup.create_backup') }}
                     </button>
                 </form>
             </div>
@@ -66,9 +66,9 @@
                     </svg>
                 </div>
                 <div class="ml-3">
-                    <h3 class="text-sm font-medium text-blue-800">Información sobre Respaldos</h3>
+                    <h3 class="text-sm font-medium text-blue-800">{{ __('admin.backup.backup_information') }}</h3>
                     <div class="mt-2 text-sm text-blue-700">
-                        <p>Los respaldos incluyen todas las bases de datos de empresas, configuraciones del sistema y archivos importantes. Se recomienda crear respaldos regulares para proteger los datos.</p>
+                        <p>{{ __('admin.backup.backup_information_text') }}</p>
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Total Respaldos</dt>
+                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('admin.backup.total_backups') }}</dt>
                                 <dd class="text-lg font-medium text-gray-900">{{ count($backups) }}</dd>
                             </dl>
                         </div>
@@ -106,12 +106,12 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Último Respaldo</dt>
+                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('admin.backup.last_backup') }}</dt>
                                 <dd class="text-lg font-medium text-gray-900">
                                     @if(count($backups) > 0)
                                         {{ \Carbon\Carbon::parse($backups[0]['created_at'])->diffForHumans() }}
                                     @else
-                                        Nunca
+                                        {{ __('admin.backup.never') }}
                                     @endif
                                 </dd>
                             </dl>
@@ -131,7 +131,7 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Tamaño Total</dt>
+                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('admin.backup.total_size') }}</dt>
                                 <dd class="text-lg font-medium text-gray-900">
                                     @php
                                         $totalSize = 0;
@@ -155,8 +155,8 @@
         <!-- Backup List -->
         <div class="bg-white shadow overflow-hidden sm:rounded-md">
             <div class="px-4 py-5 sm:px-6">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Lista de Respaldos</h3>
-                <p class="mt-1 max-w-2xl text-sm text-gray-500">Respaldos disponibles del sistema</p>
+                <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('admin.backup.backup_list') }}</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">{{ __('admin.backup.backup_list_subtitle') }}</p>
             </div>
             @if(count($backups) > 0)
             <ul class="divide-y divide-gray-200">
@@ -175,13 +175,13 @@
                                 <div class="flex items-center">
                                     <p class="text-sm font-medium text-gray-900">{{ $backup['name'] }}</p>
                                     <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                        Completado
+                                        {{ __('admin.backup.completed') }}
                                     </span>
                                 </div>
                                 <div class="mt-1">
                                     <p class="text-sm text-gray-500">
-                                        Creado: {{ \Carbon\Carbon::parse($backup['created_at'])->format('d/m/Y H:i') }}
-                                        • Tamaño: {{ $backup['size'] }}
+                                        {{ __('admin.backup.created') }} {{ \Carbon\Carbon::parse($backup['created_at'])->format('d/m/Y H:i') }}
+                                        • {{ __('admin.backup.size') }} {{ $backup['size'] }}
                                     </p>
                                 </div>
                             </div>
@@ -193,7 +193,7 @@
                                 <svg class="-ml-0.5 mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                 </svg>
-                                Descargar
+                                {{ __('admin.backup.download') }}
                             </button>
 
                             <!-- Restore -->
@@ -202,7 +202,7 @@
                                 <svg class="-ml-0.5 mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                                 </svg>
-                                Restaurar
+                                {{ __('admin.backup.restore') }}
                             </button>
 
                             <!-- Delete -->
@@ -211,7 +211,7 @@
                                 <svg class="-ml-0.5 mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                 </svg>
-                                Eliminar
+                                {{ __('admin.backup.delete') }}
                             </button>
                         </div>
                     </div>
@@ -223,8 +223,8 @@
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
                 </svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-900">No hay respaldos</h3>
-                <p class="mt-1 text-sm text-gray-500">Comienza creando tu primer respaldo del sistema.</p>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('admin.backup.no_backups') }}</h3>
+                <p class="mt-1 text-sm text-gray-500">{{ __('admin.backup.no_backups_description') }}</p>
                 <div class="mt-6">
                     <form method="POST" action="{{ route('admin.settings.backup.create') }}" class="inline">
                         @csrf
@@ -233,7 +233,7 @@
                             <svg class="-ml-1 mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" clip-rule="evenodd" />
                             </svg>
-                            Crear Primer Respaldo
+                            {{ __('admin.backup.create_first_backup') }}
                         </button>
                     </form>
                 </div>
@@ -245,8 +245,8 @@
         <div class="mt-8">
             <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:px-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">Configuración de Respaldos</h3>
-                    <p class="mt-1 max-w-2xl text-sm text-gray-500">Configuración automática de respaldos</p>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('admin.backup.backup_settings') }}</h3>
+                    <p class="mt-1 max-w-2xl text-sm text-gray-500">{{ __('admin.backup.backup_settings_subtitle') }}</p>
                 </div>
                 <div class="border-t border-gray-200 px-4 py-5 sm:p-6">
                     <form method="POST" action="{{ route('admin.settings.update') }}">
@@ -255,19 +255,19 @@
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                             <div>
                                 <label for="backup_frequency" class="block text-sm font-medium text-gray-700">
-                                    Frecuencia de Respaldos
+                                    {{ __('admin.backup.backup_frequency') }}
                                 </label>
                                 <select name="backup_frequency" 
                                         id="backup_frequency"
                                         class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md">
-                                    <option value="daily">Diario</option>
-                                    <option value="weekly" selected>Semanal</option>
-                                    <option value="monthly">Mensual</option>
+                                    <option value="daily">{{ __('admin.backup.daily') }}</option>
+                                    <option value="weekly" selected>{{ __('admin.backup.weekly') }}</option>
+                                    <option value="monthly">{{ __('admin.backup.monthly') }}</option>
                                 </select>
                             </div>
                             <div>
                                 <label for="backup_retention" class="block text-sm font-medium text-gray-700">
-                                    Retención (días)
+                                    {{ __('admin.backup.retention_days') }}
                                 </label>
                                 <input type="number" 
                                        name="backup_retention" 
@@ -280,7 +280,7 @@
                         <div class="mt-6">
                             <button type="submit" 
                                     class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                Guardar Configuración
+                                {{ __('admin.backup.save_settings') }}
                             </button>
                         </div>
                     </form>
@@ -293,20 +293,20 @@
 <script>
 function downloadBackup(filename) {
     // Implementar descarga del respaldo
-    alert('Descargando respaldo: ' + filename);
+    alert('{{ __('admin.notifications.downloading_backup', ['filename' => '']) }}' + filename);
 }
 
 function restoreBackup(filename) {
-    if (confirm('¿Estás seguro de que quieres restaurar este respaldo? Esta acción sobrescribirá todos los datos actuales.')) {
+    if (confirm('{{ __('admin.backup.restore_confirmation') }}')) {
         // Implementar restauración del respaldo
-        alert('Restaurando respaldo: ' + filename);
+        alert('{{ __('admin.notifications.restoring_backup', ['filename' => '']) }}' + filename);
     }
 }
 
 function deleteBackup(filename) {
-    if (confirm('¿Estás seguro de que quieres eliminar este respaldo?')) {
+    if (confirm('{{ __('admin.backup.delete_confirmation') }}')) {
         // Implementar eliminación del respaldo
-        alert('Eliminando respaldo: ' + filename);
+        alert('{{ __('admin.notifications.deleting_backup', ['filename' => '']) }}' + filename);
     }
 }
 </script>

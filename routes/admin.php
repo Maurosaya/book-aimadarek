@@ -14,7 +14,7 @@ Route::post('/admin/login', [SuperAdminController::class, 'login']);
 Route::post('/admin/logout', [SuperAdminController::class, 'logout'])->name('admin.logout');
 
 // Admin protected routes
-Route::middleware(['web', 'super-admin'])->group(function () {
+Route::middleware(['web', 'super-admin', 'admin-locale'])->group(function () {
     // Dashboard
     Route::get('/admin', [SuperAdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/dashboard', [SuperAdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -43,4 +43,7 @@ Route::middleware(['web', 'super-admin'])->group(function () {
     Route::put('/admin/settings', [SuperAdminController::class, 'updateSettings'])->name('admin.settings.update');
     Route::get('/admin/settings/backup', [SuperAdminController::class, 'backup'])->name('admin.settings.backup');
     Route::post('/admin/settings/backup', [SuperAdminController::class, 'createBackup'])->name('admin.settings.backup.create');
+
+    // Language Management
+    Route::get('/admin/language/{locale}', [SuperAdminController::class, 'changeLanguage'])->name('admin.language.change');
 });
