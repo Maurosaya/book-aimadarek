@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
+use Stancl\Tenancy\Database\Models\Domain;
 
 class Tenant extends BaseTenant
 {
@@ -44,7 +45,12 @@ class Tenant extends BaseTenant
      */
     public function getSupportedLocalesAttribute(): array
     {
-        return $this->attributes['supported_locales'] ?? ['en'];
+        $locales = $this->attributes['supported_locales'] ?? '["en"]';
+        
+        // Always decode from JSON string
+        $decoded = json_decode($locales, true);
+        
+        return is_array($decoded) ? $decoded : ['en'];
     }
 
     /**
@@ -79,5 +85,13 @@ class Tenant extends BaseTenant
         $secret = 'whsec_' . bin2hex(random_bytes(32));
         $this->update(['webhook_secret' => $secret]);
         return $secret;
+    }
+
+    /**
+     * Get the domains for this tenant
+     */
+    public function domains()
+    {
+        return $this->hasMany(Domain::class);
     }
 }

@@ -13,6 +13,8 @@
         apiUrl: '/api/v1',
         locale: document.documentElement.lang || 'en',
         theme: 'auto', // auto, light, dark
+        demoMode: false,
+        demoData: null
     };
 
     // Widget class
@@ -21,13 +23,19 @@
             this.container = document.getElementById(containerId);
             this.options = { ...config, ...options };
             this.isLoaded = false;
+            this.availabilityData = null;
             
             if (this.container) {
                 this.init();
             }
         }
 
-        init() {
+        async init() {
+            // Check if we're in demo mode
+            if (this.container.dataset.demo === 'true') {
+                await this.loadDemoData();
+            }
+            
             this.render();
             this.bindEvents();
             this.isLoaded = true;
@@ -202,6 +210,25 @@
                 .dark .time-slot:hover {
                     background: #4b5563;
                 }
+                
+                .loading, .no-slots, .error-message {
+                    text-align: center;
+                    padding: 1rem;
+                    color: #6b7280;
+                    font-style: italic;
+                }
+                
+                .dark .loading, .dark .no-slots, .dark .error-message {
+                    color: #d1d5db;
+                }
+                
+                .error-message {
+                    color: #ef4444;
+                }
+                
+                .dark .error-message {
+                    color: #f87171;
+                }
             `;
 
             document.head.appendChild(styles);
@@ -222,13 +249,110 @@
             });
         }
 
-        showAvailability() {
+        async loadDemoData() {
+            try {
+                const response = await fetch('/demo/access');
+                if (response.ok) {
+                    this.options.demoData = await response.json();
+                    this.options.demoMode = true;
+                }
+            } catch (error) {
+                console.error('Error loading demo data:', error);
+            }
+        }
+
+        async loadRealAvailability() {
+            try {
+                const demoData = this.options.demoData;
+                const today = new Date().toISOString().split('T')[0];
+                const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+                
+                // Try today first, then tomorrow
+                let availability = await this.fetchAvailability(demoData.tenant, demoData.service_id, today);
+                if (!availability || availability.length === 0) {
+                    availability = await this.fetchAvailability(demoData.tenant, demoData.service_id, tomorrow);
+                }
+                
+                this.displayAvailability(availability);
+                
+            } catch (error) {
+                console.error('Error loading availability:', error);
+                this.showError(this.getText('error_loading_availability'));
+            }
+        }
+
+        async fetchAvailability(tenant, serviceId, date) {
+            try {
+                const url = `/demo/availability?tenant=${tenant}&service_id=${serviceId}&date=${date}&locale=${this.options.locale}`;
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                return data.availability || [];
+                
+            } catch (error) {
+                console.error('Error fetching availability:', error);
+                return [];
+            }
+        }
+
+        displayAvailability(availability) {
+            const availabilitySection = this.container.querySelector('.availability-section');
+            if (!availabilitySection) return;
+
+            if (!availability || availability.length === 0) {
+                availabilitySection.innerHTML = `
+                    <h4>${this.getText('available_times')}</h4>
+                    <div class="no-slots">${this.getText('no_available_slots')}</div>
+                `;
+                return;
+            }
+
+            const timeSlots = availability.map(slot => {
+                const startTime = new Date(slot.start).toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                });
+                return `<div class="time-slot" data-start="${slot.start}" data-end="${slot.end}">${startTime}</div>`;
+            }).join('');
+
+            availabilitySection.innerHTML = `
+                <h4>${this.getText('available_times')}</h4>
+                <div class="time-slots">${timeSlots}</div>
+            `;
+        }
+
+        showError(message) {
+            const availabilitySection = this.container.querySelector('.availability-section');
+            if (availabilitySection) {
+                availabilitySection.innerHTML = `
+                    <h4>${this.getText('available_times')}</h4>
+                    <div class="error-message">${message}</div>
+                `;
+            }
+        }
+
+        async showAvailability() {
             const availabilitySection = this.container.querySelector('.availability-section');
             const demoNotice = this.container.querySelector('.demo-notice');
             
             if (availabilitySection && demoNotice) {
-                demoNotice.style.display = 'none';
+                // Show loading state
+                availabilitySection.innerHTML = `
+                    <h4>${this.getText('available_times')}</h4>
+                    <div class="loading">${this.getText('loading')}...</div>
+                `;
                 availabilitySection.style.display = 'block';
+                demoNotice.style.display = 'none';
+
+                // Load real availability data
+                if (this.options.demoMode && this.options.demoData) {
+                    await this.loadRealAvailability();
+                }
             }
         }
 
@@ -330,6 +454,21 @@
                     'en': 'Booking confirmed! You will receive a confirmation email.',
                     'es': '¡Reserva confirmada! Recibirás un email de confirmación.',
                     'nl': 'Boeking bevestigd! Je ontvangt een bevestigingsmail.'
+                },
+                'loading': {
+                    'en': 'Loading',
+                    'es': 'Cargando',
+                    'nl': 'Laden'
+                },
+                'error_loading_availability': {
+                    'en': 'Error loading availability. Please try again.',
+                    'es': 'Error cargando disponibilidad. Por favor, inténtalo de nuevo.',
+                    'nl': 'Fout bij het laden van beschikbaarheid. Probeer het opnieuw.'
+                },
+                'no_available_slots': {
+                    'en': 'No available slots for this date.',
+                    'es': 'No hay horarios disponibles para esta fecha.',
+                    'nl': 'Geen beschikbare tijdslots voor deze datum.'
                 }
             };
 

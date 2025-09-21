@@ -21,8 +21,8 @@ use App\Http\Controllers\WebhookTestController;
 // API v1 routes with multitenancy and authentication
 Route::prefix('v1')->middleware([
     'api',
-    'InitializeTenancyByDomain',
-    'SetLocaleFromRequest',
+    \Stancl\Tenancy\Middleware\InitializeTenancyByDomain::class,
+    \App\Http\Middleware\SetLocaleFromRequest::class,
     'auth:sanctum',
     'throttle:60,1'
 ])->group(function () {

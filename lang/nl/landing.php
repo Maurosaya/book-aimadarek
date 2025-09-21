@@ -100,6 +100,13 @@ return [
         'view_schedule' => 'Bekijk Schema',
         'no_data' => 'Geen demo-data beschikbaar',
         'configure_service' => 'Configureer Service',
+        'select_tenant' => 'Kies een Demo Tenant',
+        'open_panel' => 'Panel Openen',
+        'test_widget' => 'Widget Testen',
+        'demo_credentials' => 'Demo Inloggegevens',
+        'demo_credentials_text' => 'Gebruik email: tenant@demo.com en wachtwoord: Demo!1234 om toegang te krijgen tot elke tenant panel',
+        'widget_results' => 'Widget Test Resultaten',
+        'close_results' => 'Resultaten Sluiten',
     ],
 
     // How it works section

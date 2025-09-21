@@ -170,37 +170,107 @@
                 </p>
             </div>
 
-            <div class="max-w-2xl mx-auto">
-                <div class="widget-demo">
-                    <div class="text-center mb-6">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                            {{ __('landing.demo.widget_title') }}
+            @if($demoAccessCards && count($demoAccessCards) > 0)
+                <!-- Demo Tenant Selector -->
+                <div class="max-w-4xl mx-auto mb-8">
+                    <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6 text-center">
+                            {{ __('landing.demo.select_tenant') }}
                         </h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">
-                            {{ __('landing.demo.widget_subtitle') }}
-                        </p>
-                    </div>
-
-                    <!-- Demo mode -->
-                    <div class="text-center p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                        <div class="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-6 h-6 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
-                            </svg>
+                        
+                        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                            @foreach($demoAccessCards as $card)
+                                <div class="tenant-card border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-blue-500 transition-colors cursor-pointer" 
+                                     data-tenant="{{ $card['subdomain'] }}" 
+                                     data-service-id="{{ $card['service_id'] }}"
+                                     data-panel-url="{{ $card['panel_url'] }}"
+                                     data-widget-url="{{ $card['widget_url'] }}">
+                                    <h4 class="font-semibold text-gray-900 dark:text-white mb-2">
+                                        {{ $card['brand_name'] }}
+                                    </h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                        {{ $card['subdomain'] }}.book.aimadarek.com
+                                    </p>
+                                    <div class="flex flex-col space-y-2">
+                                        <button class="open-panel-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm font-medium transition-colors">
+                                            {{ __('landing.demo.open_panel') }}
+                                        </button>
+                                        <button class="test-widget-btn bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm font-medium transition-colors">
+                                            {{ __('landing.demo.test_widget') }}
+                                        </button>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                            {{ __('landing.demo.demo_mode') }}
-                        </h4>
-                        <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                            {{ __('landing.demo.no_data') }}
-                        </p>
-                        <a href="{{ $marketing['contact_url'] }}" 
-                           class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors w-full md:w-auto">
-                            {{ __('landing.demo.configure_service') }}
-                        </a>
+
+                        <!-- Demo Info -->
+                        <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                            <div class="flex items-start">
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                                </svg>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-blue-800 dark:text-blue-200 mb-1">
+                                        {{ __('landing.demo.demo_credentials') }}
+                                    </h4>
+                                    <p class="text-sm text-blue-700 dark:text-blue-300">
+                                        {{ __('landing.demo.demo_credentials_text') }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+                <!-- Widget Demo Results -->
+                <div id="widget-demo-results" class="max-w-2xl mx-auto hidden">
+                    <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                            {{ __('landing.demo.widget_results') }}
+                        </h3>
+                        <div id="availability-results" class="space-y-3">
+                            <!-- Results will be populated here -->
+                        </div>
+                        <div class="mt-4 text-center">
+                            <button id="close-results" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors">
+                                {{ __('landing.demo.close_results') }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            @else
+                <!-- No Demo Data Available -->
+                <div class="max-w-2xl mx-auto">
+                    <div class="widget-demo">
+                        <div class="text-center mb-6">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                                {{ __('landing.demo.widget_title') }}
+                            </h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">
+                                {{ __('landing.demo.widget_subtitle') }}
+                            </p>
+                        </div>
+
+                        <div class="text-center p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-6 h-6 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                                {{ __('landing.demo.demo_mode') }}
+                            </h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                                {{ __('landing.demo.no_data') }}
+                            </p>
+                            <a href="{{ $marketing['contact_url'] }}" 
+                               class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors w-full md:w-auto">
+                                {{ __('landing.demo.configure_service') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </section>
 
@@ -223,8 +293,121 @@
 
 @section('scripts')
 <script>
-    // Widget demo functionality
+    // Demo functionality
     document.addEventListener('DOMContentLoaded', function() {
+        // Handle panel button clicks
+        document.querySelectorAll('.open-panel-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const card = this.closest('.tenant-card');
+                const panelUrl = card.dataset.panelUrl;
+                
+                if (panelUrl) {
+                    window.open(panelUrl, '_blank');
+                }
+            });
+        });
+
+        // Handle widget test button clicks
+        document.querySelectorAll('.test-widget-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const card = this.closest('.tenant-card');
+                const tenant = card.dataset.tenant;
+                const serviceId = card.dataset.serviceId;
+                
+                if (tenant && serviceId) {
+                    testWidget(tenant, serviceId);
+                }
+            });
+        });
+
+        // Handle close results button
+        const closeResultsBtn = document.getElementById('close-results');
+        if (closeResultsBtn) {
+            closeResultsBtn.addEventListener('click', function() {
+                const resultsDiv = document.getElementById('widget-demo-results');
+                if (resultsDiv) {
+                    resultsDiv.classList.add('hidden');
+                }
+            });
+        }
+
+        // Function to test widget availability
+        async function testWidget(tenant, serviceId) {
+            const resultsDiv = document.getElementById('widget-demo-results');
+            const resultsContent = document.getElementById('availability-results');
+            
+            if (!resultsDiv || !resultsContent) return;
+
+            // Show loading state
+            resultsDiv.classList.remove('hidden');
+            resultsContent.innerHTML = `
+                <div class="flex items-center justify-center py-8">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                    <span class="ml-3 text-gray-600 dark:text-gray-400">Loading availability...</span>
+                </div>
+            `;
+
+            try {
+                // Get tomorrow's date
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                const dateStr = tomorrow.toISOString().split('T')[0];
+
+                // Make API request
+                const response = await fetch(`/demo/availability?tenant=${tenant}&service_id=${serviceId}&date=${dateStr}&locale={{ app()->getLocale() }}`);
+                const data = await response.json();
+
+                if (response.ok && data.availability) {
+                    // Display availability results
+                    resultsContent.innerHTML = `
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">
+                                Availability for ${tenant} - ${dateStr}
+                            </h4>
+                        </div>
+                        <div class="space-y-2">
+                            ${data.availability.map(slot => `
+                                <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                    <span class="text-sm font-medium text-gray-900 dark:text-white">
+                                        ${slot.time}
+                                    </span>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400">
+                                        Available
+                                    </span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                } else {
+                    // Show error message
+                    resultsContent.innerHTML = `
+                        <div class="text-center py-8">
+                            <svg class="w-12 h-12 text-red-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                            <p class="text-red-600 dark:text-red-400">
+                                ${data.error || 'Failed to load availability data'}
+                            </p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error testing widget:', error);
+                resultsContent.innerHTML = `
+                    <div class="text-center py-8">
+                        <svg class="w-12 h-12 text-red-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="text-red-600 dark:text-red-400">
+                            Network error. Please try again.
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
         // Check if widget.js exists and load it
         const widgetScript = document.createElement('script');
         widgetScript.src = '/widget.js';

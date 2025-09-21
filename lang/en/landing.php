@@ -100,6 +100,13 @@ return [
         'view_schedule' => 'View Schedule',
         'no_data' => 'No demo data available',
         'configure_service' => 'Configure Service',
+        'select_tenant' => 'Choose a Demo Tenant',
+        'open_panel' => 'Open Panel',
+        'test_widget' => 'Test Widget',
+        'demo_credentials' => 'Demo Credentials',
+        'demo_credentials_text' => 'Use email: tenant@demo.com and password: Demo!1234 to access each tenant panel',
+        'widget_results' => 'Widget Test Results',
+        'close_results' => 'Close Results',
     ],
 
     // How it works section

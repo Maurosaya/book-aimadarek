@@ -6,18 +6,22 @@ return [
     | Marketing Configuration
     |--------------------------------------------------------------------------
     |
-    | Configuration for marketing-related settings used in the landing page
-    | and other marketing materials.
+    | Configuration for marketing pages and demo functionality
     |
     */
 
-    'brand' => env('MARKETING_BRAND', env('APP_NAME', 'Aimadarek Book')),
+    'brand' => env('MARKETING_BRAND', 'Aimadarek Book'),
+    'contact_url' => env('MARKETING_CONTACT_URL', '#contact'),
+    'demo_enabled' => env('MARKETING_DEMO_ENABLED', true),
     
-    'contact_url' => env('MARKETING_CONTACT_URL', 'mailto:hola@aimadarek.com'),
+    'social' => [
+        'twitter' => env('MARKETING_TWITTER_URL', 'https://twitter.com/aimadarek'),
+        'linkedin' => env('MARKETING_LINKEDIN_URL', 'https://linkedin.com/company/aimadarek'),
+        'github' => env('MARKETING_GITHUB_URL', 'https://github.com/aimadarek'),
+    ],
     
-    'demo_url' => env('MARKETING_DEMO_URL', ''),
-    
-    'docs_url' => env('MARKETING_DOCS_URL', '/api/health'),
-    
-    'webhook_fallback_secret' => env('WEBHOOK_FALLBACK_SECRET', 'default-webhook-secret'),
+    'analytics' => [
+        'google_analytics_id' => env('GOOGLE_ANALYTICS_ID'),
+        'facebook_pixel_id' => env('FACEBOOK_PIXEL_ID'),
+    ],
 ];

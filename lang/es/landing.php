@@ -100,6 +100,13 @@ return [
         'view_schedule' => 'Ver Horarios',
         'no_data' => 'Sin datos de demo disponibles',
         'configure_service' => 'Configurar Servicio',
+        'select_tenant' => 'Elige un Tenant Demo',
+        'open_panel' => 'Abrir Panel',
+        'test_widget' => 'Probar Widget',
+        'demo_credentials' => 'Credenciales Demo',
+        'demo_credentials_text' => 'Usa email: tenant@demo.com y contraseña: Demo!1234 para acceder a cada panel de tenant',
+        'widget_results' => 'Resultados de Prueba del Widget',
+        'close_results' => 'Cerrar Resultados',
     ],
 
     // How it works section
