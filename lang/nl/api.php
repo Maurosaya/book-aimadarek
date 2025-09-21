@@ -72,4 +72,19 @@ return [
         'invalid_tenant' => 'Ongeldige tenant of subdomein.',
         'service_unavailable' => 'Service is momenteel niet beschikbaar.',
     ],
+
+    // Webhook Messages
+    'webhooks' => [
+        'delivery_failed' => 'Webhook levering mislukt',
+        'delivery_success' => 'Webhook succesvol geleverd',
+        'invalid_signature' => 'Ongeldige webhook handtekening',
+        'payload_too_large' => 'Webhook payload overschrijdt grootte limiet',
+        'endpoint_not_found' => 'Webhook endpoint niet gevonden',
+        'retry_scheduled' => 'Webhook herhaling gepland',
+        'max_retries_exceeded' => 'Maximum webhook herhalingen overschreden',
+        'endpoint_created' => 'Webhook endpoint succesvol aangemaakt',
+        'endpoint_updated' => 'Webhook endpoint succesvol bijgewerkt',
+        'endpoint_deleted' => 'Webhook endpoint succesvol verwijderd',
+        'test_sent' => 'Test webhook succesvol verzonden',
+    ],
 ];

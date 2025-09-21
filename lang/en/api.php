@@ -72,4 +72,19 @@ return [
         'invalid_tenant' => 'Invalid tenant or subdomain.',
         'service_unavailable' => 'Service is currently unavailable.',
     ],
+
+    // Webhook Messages
+    'webhooks' => [
+        'delivery_failed' => 'Webhook delivery failed',
+        'delivery_success' => 'Webhook delivered successfully',
+        'invalid_signature' => 'Invalid webhook signature',
+        'payload_too_large' => 'Webhook payload exceeds size limit',
+        'endpoint_not_found' => 'Webhook endpoint not found',
+        'retry_scheduled' => 'Webhook retry scheduled',
+        'max_retries_exceeded' => 'Maximum webhook retries exceeded',
+        'endpoint_created' => 'Webhook endpoint created successfully',
+        'endpoint_updated' => 'Webhook endpoint updated successfully',
+        'endpoint_deleted' => 'Webhook endpoint deleted successfully',
+        'test_sent' => 'Test webhook sent successfully',
+    ],
 ];

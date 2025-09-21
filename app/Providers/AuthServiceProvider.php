@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Booking;
+use App\Models\WebhookEndpoint;
 use App\Policies\BookingPolicy;
+use App\Policies\WebhookEndpointPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -16,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Booking::class => BookingPolicy::class,
+        WebhookEndpoint::class => WebhookEndpointPolicy::class,
     ];
 
     /**

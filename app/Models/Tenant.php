@@ -18,6 +18,7 @@ class Tenant extends BaseTenant
         'supported_locales',
         'timezone',
         'settings',
+        'webhook_secret',
     ];
 
     /**
@@ -60,5 +61,23 @@ class Tenant extends BaseTenant
     public function getTimezoneAttribute(): string
     {
         return $this->attributes['timezone'] ?? 'UTC';
+    }
+
+    /**
+     * Get webhook secret with fallback to global config
+     */
+    public function getWebhookSecret(): string
+    {
+        return $this->webhook_secret ?? config('app.webhook_fallback_secret', 'default-webhook-secret');
+    }
+
+    /**
+     * Generate a new webhook secret
+     */
+    public function generateWebhookSecret(): string
+    {
+        $secret = 'whsec_' . bin2hex(random_bytes(32));
+        $this->update(['webhook_secret' => $secret]);
+        return $secret;
     }
 }

@@ -72,4 +72,19 @@ return [
         'invalid_tenant' => 'Tenant o subdominio inválido.',
         'service_unavailable' => 'El servicio no está disponible actualmente.',
     ],
+
+    // Webhook Messages
+    'webhooks' => [
+        'delivery_failed' => 'Falló la entrega del webhook',
+        'delivery_success' => 'Webhook entregado exitosamente',
+        'invalid_signature' => 'Firma de webhook inválida',
+        'payload_too_large' => 'El payload del webhook excede el límite de tamaño',
+        'endpoint_not_found' => 'Endpoint de webhook no encontrado',
+        'retry_scheduled' => 'Reintento de webhook programado',
+        'max_retries_exceeded' => 'Se excedió el máximo de reintentos del webhook',
+        'endpoint_created' => 'Endpoint de webhook creado exitosamente',
+        'endpoint_updated' => 'Endpoint de webhook actualizado exitosamente',
+        'endpoint_deleted' => 'Endpoint de webhook eliminado exitosamente',
+        'test_sent' => 'Webhook de prueba enviado exitosamente',
+    ],
 ];

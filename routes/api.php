@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AvailabilityController;
 use App\Http\Controllers\Api\V1\BookingController;
+use App\Http\Controllers\WebhookEndpointController;
+use App\Http\Controllers\WebhookTestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,13 @@ Route::prefix('v1')->middleware([
     
     Route::get('/bookings/{id}', [BookingController::class, 'show'])
         ->name('api.v1.bookings.show');
+    
+    // Webhook endpoints management (owner/manager only)
+    Route::apiResource('webhook-endpoints', WebhookEndpointController::class)
+        ->except(['show']);
+    
+    Route::post('/webhook-endpoints/{webhookEndpoint}/test', [WebhookEndpointController::class, 'test'])
+        ->name('api.v1.webhook-endpoints.test');
 });
 
 // Health check endpoint (no authentication required)
@@ -48,3 +57,11 @@ Route::get('/health', function () {
         'version' => '1.0.0',
     ]);
 })->name('api.health');
+
+// Webhook test endpoints (no authentication required for testing)
+Route::prefix('webhook-test')->group(function () {
+    Route::post('/success', [WebhookTestController::class, 'success']);
+    Route::post('/error', [WebhookTestController::class, 'error']);
+    Route::post('/verify', [WebhookTestController::class, 'verify']);
+    Route::post('/timeout', [WebhookTestController::class, 'timeout']);
+});
