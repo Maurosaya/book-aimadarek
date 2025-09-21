@@ -53,7 +53,7 @@
                     </svg>
                     {{ __('admin.tenant_details.edit_company') }}
                 </a>
-                <a href="{{ $tenant->domains->first()->domain ?? '#' }}" 
+                <a href="{{ $tenant->domains->count() > 0 ? 'https://' . $tenant->domains->first()->domain : '#' }}" 
                    target="_blank"
                    class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                     <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
