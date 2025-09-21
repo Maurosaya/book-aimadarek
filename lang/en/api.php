@@ -1,40 +1,75 @@
 <?php
 
 return [
-    'availability' => [
-        'title' => 'Available Time Slots',
-        'no_slots' => 'No available time slots for the selected date.',
-        'service_not_found' => 'Service not found.',
-        'invalid_date' => 'Invalid date provided.',
-        'date_past' => 'Cannot check availability for past dates.',
+    // API Response Messages
+    'booking_confirmed' => 'Booking confirmed successfully',
+    'booking_cancelled' => 'Booking cancelled successfully',
+    'booking_not_found' => 'Booking not found',
+    'booking_already_cancelled' => 'Booking is already cancelled',
+    'service_not_found' => 'Service not found',
+    'no_availability' => 'No availability found for the selected date and time',
+    'booking_failed' => 'Booking failed due to availability constraints',
+    'unauthorized_access' => 'Unauthorized access to this booking',
+    'invalid_service' => 'Invalid service for this tenant',
+    'capacity_exceeded' => 'Requested party size exceeds available capacity',
+
+    // API Attributes
+    'attributes' => [
+        'service_id' => 'Service ID',
+        'date' => 'Date',
+        'party_size' => 'Party Size',
+        'location_id' => 'Location ID',
+        'locale' => 'Language',
+        'start_time' => 'Start Time',
+        'customer' => 'Customer',
+        'customer_name' => 'Customer Name',
+        'customer_email' => 'Customer Email',
+        'customer_phone' => 'Customer Phone',
+        'notes' => 'Notes',
+        'source' => 'Source',
+        'cancellation_reason' => 'Cancellation Reason',
     ],
-    
-    'booking' => [
-        'created' => 'Booking confirmed successfully',
-        'cancelled' => 'Booking cancelled successfully',
-        'not_found' => 'Booking not found',
-        'already_cancelled' => 'Booking is already cancelled',
-        'cannot_cancel' => 'Cannot cancel this booking',
-        'conflict' => 'Time slot is no longer available',
-        'invalid_service' => 'Invalid service selected',
-        'invalid_time' => 'Invalid time slot selected',
-        'party_size_required' => 'Party size is required for this service',
+
+    // API Validation Messages
+    'validation' => [
+        'service_id_required' => 'Service ID is required',
+        'service_id_uuid' => 'Service ID must be a valid UUID',
+        'service_id_exists' => 'Selected service does not exist',
+        'date_required' => 'Date is required',
+        'date_format' => 'Date must be in valid format',
+        'date_future' => 'Date must be today or in the future',
+        'party_size_integer' => 'Party size must be a number',
+        'party_size_min' => 'Party size must be at least 1',
+        'party_size_max' => 'Party size cannot exceed 50',
+        'location_id_uuid' => 'Location ID must be a valid UUID',
+        'location_id_exists' => 'Selected location does not exist',
+        'locale_supported' => 'Language must be one of: es, en, nl',
+        'start_required' => 'Start time is required',
+        'start_format' => 'Start time must be in ISO 8601 format with timezone',
+        'start_future' => 'Start time must be in the future',
         'customer_required' => 'Customer information is required',
+        'customer_array' => 'Customer must be an object',
+        'customer_name_required' => 'Customer name is required',
+        'customer_name_string' => 'Customer name must be text',
+        'customer_name_max' => 'Customer name cannot exceed 255 characters',
+        'customer_email_format' => 'Customer email must be a valid email address',
+        'customer_email_max' => 'Customer email cannot exceed 255 characters',
+        'customer_phone_string' => 'Customer phone must be text',
+        'customer_phone_max' => 'Customer phone cannot exceed 20 characters',
+        'notes_string' => 'Notes must be text',
+        'notes_max' => 'Notes cannot exceed 1000 characters',
+        'source_string' => 'Source must be text',
+        'source_max' => 'Source cannot exceed 100 characters',
+        'motivo_string' => 'Cancellation reason must be text',
+        'motivo_max' => 'Cancellation reason cannot exceed 500 characters',
     ],
-    
+
+    // API Error Messages
     'errors' => [
-        'unauthorized' => 'Unauthorized access',
-        'forbidden' => 'Access forbidden',
-        'not_found' => 'Resource not found',
-        'validation_failed' => 'Validation failed',
-        'server_error' => 'Internal server error',
-        'rate_limit' => 'Too many requests. Please try again later.',
-    ],
-    
-    'messages' => [
-        'booking_confirmed' => 'Your booking has been confirmed',
-        'booking_cancelled' => 'Your booking has been cancelled',
-        'booking_reminder' => 'Reminder: You have a booking tomorrow',
-        'booking_no_show' => 'You missed your booking',
+        'internal_error' => 'An internal error occurred. Please try again later.',
+        'rate_limit_exceeded' => 'Too many requests. Please try again later.',
+        'maintenance_mode' => 'Service is temporarily unavailable for maintenance.',
+        'invalid_tenant' => 'Invalid tenant or subdomain.',
+        'service_unavailable' => 'Service is currently unavailable.',
     ],
 ];

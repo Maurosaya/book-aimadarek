@@ -1,40 +1,75 @@
 <?php
 
 return [
-    'availability' => [
-        'title' => 'Beschikbare Tijdslots',
-        'no_slots' => 'Geen beschikbare tijdslots voor de geselecteerde datum.',
-        'service_not_found' => 'Dienst niet gevonden.',
-        'invalid_date' => 'Ongeldige datum opgegeven.',
-        'date_past' => 'Kan beschikbaarheid niet controleren voor datums in het verleden.',
+    // API Response Messages
+    'booking_confirmed' => 'Reservering succesvol bevestigd',
+    'booking_cancelled' => 'Reservering succesvol geannuleerd',
+    'booking_not_found' => 'Reservering niet gevonden',
+    'booking_already_cancelled' => 'Reservering is al geannuleerd',
+    'service_not_found' => 'Service niet gevonden',
+    'no_availability' => 'Geen beschikbaarheid gevonden voor de geselecteerde datum en tijd',
+    'booking_failed' => 'Reservering mislukt vanwege beschikbaarheidsbeperkingen',
+    'unauthorized_access' => 'Ongeautoriseerde toegang tot deze reservering',
+    'invalid_service' => 'Ongeldige service voor deze tenant',
+    'capacity_exceeded' => 'Gevraagde groepsgrootte overschrijdt de beschikbare capaciteit',
+
+    // API Attributes
+    'attributes' => [
+        'service_id' => 'Service ID',
+        'date' => 'Datum',
+        'party_size' => 'Groepsgrootte',
+        'location_id' => 'Locatie ID',
+        'locale' => 'Taal',
+        'start_time' => 'Starttijd',
+        'customer' => 'Klant',
+        'customer_name' => 'Klantnaam',
+        'customer_email' => 'Klant Email',
+        'customer_phone' => 'Klant Telefoon',
+        'notes' => 'Notities',
+        'source' => 'Bron',
+        'cancellation_reason' => 'Annuleringsreden',
     ],
-    
-    'booking' => [
-        'created' => 'Reservering succesvol bevestigd',
-        'cancelled' => 'Reservering succesvol geannuleerd',
-        'not_found' => 'Reservering niet gevonden',
-        'already_cancelled' => 'Reservering is al geannuleerd',
-        'cannot_cancel' => 'Kan deze reservering niet annuleren',
-        'conflict' => 'Tijdslot is niet meer beschikbaar',
-        'invalid_service' => 'Ongeldige dienst geselecteerd',
-        'invalid_time' => 'Ongeldig tijdslot geselecteerd',
-        'party_size_required' => 'Aantal personen is vereist voor deze dienst',
+
+    // API Validation Messages
+    'validation' => [
+        'service_id_required' => 'Service ID is vereist',
+        'service_id_uuid' => 'Service ID moet een geldige UUID zijn',
+        'service_id_exists' => 'Geselecteerde service bestaat niet',
+        'date_required' => 'Datum is vereist',
+        'date_format' => 'Datum moet een geldig formaat hebben',
+        'date_future' => 'Datum moet vandaag of in de toekomst zijn',
+        'party_size_integer' => 'Groepsgrootte moet een nummer zijn',
+        'party_size_min' => 'Groepsgrootte moet minimaal 1 zijn',
+        'party_size_max' => 'Groepsgrootte kan niet meer dan 50 zijn',
+        'location_id_uuid' => 'Locatie ID moet een geldige UUID zijn',
+        'location_id_exists' => 'Geselecteerde locatie bestaat niet',
+        'locale_supported' => 'Taal moet een van de volgende zijn: es, en, nl',
+        'start_required' => 'Starttijd is vereist',
+        'start_format' => 'Starttijd moet in ISO 8601 formaat met tijdzone zijn',
+        'start_future' => 'Starttijd moet in de toekomst zijn',
         'customer_required' => 'Klantinformatie is vereist',
+        'customer_array' => 'Klant moet een object zijn',
+        'customer_name_required' => 'Klantnaam is vereist',
+        'customer_name_string' => 'Klantnaam moet tekst zijn',
+        'customer_name_max' => 'Klantnaam kan niet meer dan 255 karakters zijn',
+        'customer_email_format' => 'Klant email moet een geldig email adres zijn',
+        'customer_email_max' => 'Klant email kan niet meer dan 255 karakters zijn',
+        'customer_phone_string' => 'Klant telefoon moet tekst zijn',
+        'customer_phone_max' => 'Klant telefoon kan niet meer dan 20 karakters zijn',
+        'notes_string' => 'Notities moeten tekst zijn',
+        'notes_max' => 'Notities kunnen niet meer dan 1000 karakters zijn',
+        'source_string' => 'Bron moet tekst zijn',
+        'source_max' => 'Bron kan niet meer dan 100 karakters zijn',
+        'motivo_string' => 'Annuleringsreden moet tekst zijn',
+        'motivo_max' => 'Annuleringsreden kan niet meer dan 500 karakters zijn',
     ],
-    
+
+    // API Error Messages
     'errors' => [
-        'unauthorized' => 'Ongeautoriseerde toegang',
-        'forbidden' => 'Toegang verboden',
-        'not_found' => 'Bron niet gevonden',
-        'validation_failed' => 'Validatie mislukt',
-        'server_error' => 'Interne serverfout',
-        'rate_limit' => 'Te veel verzoeken. Probeer het later opnieuw.',
-    ],
-    
-    'messages' => [
-        'booking_confirmed' => 'Uw reservering is bevestigd',
-        'booking_cancelled' => 'Uw reservering is geannuleerd',
-        'booking_reminder' => 'Herinnering: U heeft morgen een reservering',
-        'booking_no_show' => 'U heeft uw reservering gemist',
+        'internal_error' => 'Er is een interne fout opgetreden. Probeer het later opnieuw.',
+        'rate_limit_exceeded' => 'Te veel verzoeken. Probeer het later opnieuw.',
+        'maintenance_mode' => 'Service is tijdelijk niet beschikbaar voor onderhoud.',
+        'invalid_tenant' => 'Ongeldige tenant of subdomein.',
+        'service_unavailable' => 'Service is momenteel niet beschikbaar.',
     ],
 ];

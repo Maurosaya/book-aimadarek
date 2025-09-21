@@ -1,40 +1,75 @@
 <?php
 
 return [
-    'availability' => [
-        'title' => 'Horarios Disponibles',
-        'no_slots' => 'No hay horarios disponibles para la fecha seleccionada.',
-        'service_not_found' => 'Servicio no encontrado.',
-        'invalid_date' => 'Fecha inválida proporcionada.',
-        'date_past' => 'No se puede verificar disponibilidad para fechas pasadas.',
+    // API Response Messages
+    'booking_confirmed' => 'Reserva confirmada exitosamente',
+    'booking_cancelled' => 'Reserva cancelada exitosamente',
+    'booking_not_found' => 'Reserva no encontrada',
+    'booking_already_cancelled' => 'La reserva ya está cancelada',
+    'service_not_found' => 'Servicio no encontrado',
+    'no_availability' => 'No hay disponibilidad para la fecha y hora seleccionadas',
+    'booking_failed' => 'La reserva falló debido a restricciones de disponibilidad',
+    'unauthorized_access' => 'Acceso no autorizado a esta reserva',
+    'invalid_service' => 'Servicio inválido para este tenant',
+    'capacity_exceeded' => 'El tamaño del grupo solicitado excede la capacidad disponible',
+
+    // API Attributes
+    'attributes' => [
+        'service_id' => 'ID del Servicio',
+        'date' => 'Fecha',
+        'party_size' => 'Tamaño del Grupo',
+        'location_id' => 'ID de Ubicación',
+        'locale' => 'Idioma',
+        'start_time' => 'Hora de Inicio',
+        'customer' => 'Cliente',
+        'customer_name' => 'Nombre del Cliente',
+        'customer_email' => 'Email del Cliente',
+        'customer_phone' => 'Teléfono del Cliente',
+        'notes' => 'Notas',
+        'source' => 'Origen',
+        'cancellation_reason' => 'Motivo de Cancelación',
     ],
-    
-    'booking' => [
-        'created' => 'Reserva confirmada exitosamente',
-        'cancelled' => 'Reserva cancelada exitosamente',
-        'not_found' => 'Reserva no encontrada',
-        'already_cancelled' => 'La reserva ya está cancelada',
-        'cannot_cancel' => 'No se puede cancelar esta reserva',
-        'conflict' => 'El horario ya no está disponible',
-        'invalid_service' => 'Servicio inválido seleccionado',
-        'invalid_time' => 'Horario inválido seleccionado',
-        'party_size_required' => 'El número de personas es requerido para este servicio',
+
+    // API Validation Messages
+    'validation' => [
+        'service_id_required' => 'El ID del servicio es requerido',
+        'service_id_uuid' => 'El ID del servicio debe ser un UUID válido',
+        'service_id_exists' => 'El servicio seleccionado no existe',
+        'date_required' => 'La fecha es requerida',
+        'date_format' => 'La fecha debe tener un formato válido',
+        'date_future' => 'La fecha debe ser hoy o en el futuro',
+        'party_size_integer' => 'El tamaño del grupo debe ser un número',
+        'party_size_min' => 'El tamaño del grupo debe ser al menos 1',
+        'party_size_max' => 'El tamaño del grupo no puede exceder 50',
+        'location_id_uuid' => 'El ID de ubicación debe ser un UUID válido',
+        'location_id_exists' => 'La ubicación seleccionada no existe',
+        'locale_supported' => 'El idioma debe ser uno de: es, en, nl',
+        'start_required' => 'La hora de inicio es requerida',
+        'start_format' => 'La hora de inicio debe estar en formato ISO 8601 con zona horaria',
+        'start_future' => 'La hora de inicio debe ser en el futuro',
         'customer_required' => 'La información del cliente es requerida',
+        'customer_array' => 'El cliente debe ser un objeto',
+        'customer_name_required' => 'El nombre del cliente es requerido',
+        'customer_name_string' => 'El nombre del cliente debe ser texto',
+        'customer_name_max' => 'El nombre del cliente no puede exceder 255 caracteres',
+        'customer_email_format' => 'El email del cliente debe ser una dirección de email válida',
+        'customer_email_max' => 'El email del cliente no puede exceder 255 caracteres',
+        'customer_phone_string' => 'El teléfono del cliente debe ser texto',
+        'customer_phone_max' => 'El teléfono del cliente no puede exceder 20 caracteres',
+        'notes_string' => 'Las notas deben ser texto',
+        'notes_max' => 'Las notas no pueden exceder 1000 caracteres',
+        'source_string' => 'El origen debe ser texto',
+        'source_max' => 'El origen no puede exceder 100 caracteres',
+        'motivo_string' => 'El motivo de cancelación debe ser texto',
+        'motivo_max' => 'El motivo de cancelación no puede exceder 500 caracteres',
     ],
-    
+
+    // API Error Messages
     'errors' => [
-        'unauthorized' => 'Acceso no autorizado',
-        'forbidden' => 'Acceso prohibido',
-        'not_found' => 'Recurso no encontrado',
-        'validation_failed' => 'Validación fallida',
-        'server_error' => 'Error interno del servidor',
-        'rate_limit' => 'Demasiadas solicitudes. Por favor, inténtalo de nuevo más tarde.',
-    ],
-    
-    'messages' => [
-        'booking_confirmed' => 'Tu reserva ha sido confirmada',
-        'booking_cancelled' => 'Tu reserva ha sido cancelada',
-        'booking_reminder' => 'Recordatorio: Tienes una reserva mañana',
-        'booking_no_show' => 'Perdiste tu reserva',
+        'internal_error' => 'Ocurrió un error interno. Por favor, inténtalo de nuevo más tarde.',
+        'rate_limit_exceeded' => 'Demasiadas solicitudes. Por favor, inténtalo de nuevo más tarde.',
+        'maintenance_mode' => 'El servicio no está disponible temporalmente por mantenimiento.',
+        'invalid_tenant' => 'Tenant o subdominio inválido.',
+        'service_unavailable' => 'El servicio no está disponible actualmente.',
     ],
 ];
