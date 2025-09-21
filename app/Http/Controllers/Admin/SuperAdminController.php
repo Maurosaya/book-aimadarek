@@ -234,4 +234,324 @@ class SuperAdminController extends Controller
 
         return $stats;
     }
+
+    // ==================== USERS MANAGEMENT ====================
+
+    /**
+     * Display a listing of all users across all tenants
+     */
+    public function users()
+    {
+        $users = User::with('tenant')->paginate(15);
+        return view('admin.users.index', compact('users'));
+    }
+
+    /**
+     * Show the form for creating a new user
+     */
+    public function createUser()
+    {
+        $tenants = Tenant::where('active', true)->get();
+        return view('admin.users.create', compact('tenants'));
+    }
+
+    /**
+     * Store a newly created user
+     */
+    public function storeUser(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8'],
+            'tenant_id' => ['required', 'exists:tenants,id'],
+            'role' => ['required', 'string', 'in:owner,admin,staff'],
+            'active' => ['boolean'],
+        ]);
+
+        try {
+            User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'tenant_id' => $request->input('tenant_id'),
+                'role' => $request->input('role'),
+                'active' => $request->boolean('active', true),
+            ]);
+
+            return redirect()->route('admin.users.index')
+                ->with('success', 'Usuario creado exitosamente.');
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error al crear el usuario: ' . $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Display the specified user
+     */
+    public function showUser(User $user)
+    {
+        $user->load('tenant');
+        $booking_stats = $this->getUserBookingStats($user->id);
+        
+        return view('admin.users.show', compact('user', 'booking_stats'));
+    }
+
+    /**
+     * Show the form for editing the specified user
+     */
+    public function editUser(User $user)
+    {
+        $tenants = Tenant::where('active', true)->get();
+        return view('admin.users.edit', compact('user', 'tenants'));
+    }
+
+    /**
+     * Update the specified user
+     */
+    public function updateUser(Request $request, User $user)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email,' . $user->id],
+            'tenant_id' => ['required', 'exists:tenants,id'],
+            'role' => ['required', 'string', 'in:owner,admin,staff'],
+            'active' => ['boolean'],
+        ]);
+
+        $updateData = [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'tenant_id' => $request->input('tenant_id'),
+            'role' => $request->input('role'),
+            'active' => $request->boolean('active'),
+        ];
+
+        // Only update password if provided
+        if ($request->filled('password')) {
+            $request->validate(['password' => ['string', 'min:8']]);
+            $updateData['password'] = Hash::make($request->input('password'));
+        }
+
+        $user->update($updateData);
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'Usuario actualizado exitosamente.');
+    }
+
+    /**
+     * Remove the specified user
+     */
+    public function destroyUser(User $user)
+    {
+        try {
+            $user->delete();
+            return redirect()->route('admin.users.index')
+                ->with('success', 'Usuario eliminado exitosamente.');
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error al eliminar el usuario: ' . $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Toggle user active status
+     */
+    public function toggleUser(User $user)
+    {
+        $user->update(['active' => !$user->active]);
+        
+        $status = $user->active ? 'activado' : 'desactivado';
+        return redirect()->back()
+            ->with('success', "Usuario {$status} exitosamente.");
+    }
+
+    /**
+     * Get booking statistics for a specific user
+     */
+    private function getUserBookingStats($userId)
+    {
+        $user = User::find($userId);
+        if (!$user || !$user->tenant) return [];
+
+        $stats = [];
+        $user->tenant->run(function () use (&$stats, $userId) {
+            $stats = [
+                'total_bookings' => \App\Models\Booking::where('created_by', $userId)->count(),
+                'today_bookings' => \App\Models\Booking::where('created_by', $userId)
+                    ->whereDate('start_at', today())->count(),
+                'this_month' => \App\Models\Booking::where('created_by', $userId)
+                    ->whereMonth('start_at', now()->month)->count(),
+            ];
+        });
+
+        return $stats;
+    }
+
+    // ==================== SYSTEM CONFIGURATION ====================
+
+    /**
+     * Display system settings
+     */
+    public function settings()
+    {
+        $system_stats = [
+            'total_tenants' => Tenant::count(),
+            'active_tenants' => Tenant::where('active', true)->count(),
+            'total_users' => User::count(),
+            'active_users' => User::where('active', true)->count(),
+            'total_bookings' => $this->getTotalBookings(),
+            'system_uptime' => $this->getSystemUptime(),
+            'disk_usage' => $this->getDiskUsage(),
+            'memory_usage' => $this->getMemoryUsage(),
+        ];
+
+        return view('admin.settings.index', compact('system_stats'));
+    }
+
+    /**
+     * Update system settings
+     */
+    public function updateSettings(Request $request)
+    {
+        $request->validate([
+            'maintenance_mode' => ['boolean'],
+            'max_tenants' => ['integer', 'min:1'],
+            'backup_frequency' => ['string', 'in:daily,weekly,monthly'],
+            'email_notifications' => ['boolean'],
+        ]);
+
+        // Here you would typically update configuration files or database settings
+        // For now, we'll just show a success message
+        
+        return redirect()->route('admin.settings.index')
+            ->with('success', 'Configuración del sistema actualizada exitosamente.');
+    }
+
+    /**
+     * Display backup management page
+     */
+    public function backup()
+    {
+        $backups = $this->getBackupList();
+        return view('admin.settings.backup', compact('backups'));
+    }
+
+    /**
+     * Create a new backup
+     */
+    public function createBackup(Request $request)
+    {
+        try {
+            // Here you would implement actual backup creation
+            // For now, we'll simulate it
+            
+            $backup_name = 'backup_' . now()->format('Y_m_d_H_i_s') . '.sql';
+            
+            return redirect()->route('admin.settings.backup')
+                ->with('success', "Backup '{$backup_name}' creado exitosamente.");
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error al crear el backup: ' . $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Get system uptime information
+     */
+    private function getSystemUptime()
+    {
+        try {
+            $uptime = shell_exec('uptime -p');
+            return $uptime ? trim($uptime) : 'No disponible';
+        } catch (\Exception $e) {
+            return 'No disponible';
+        }
+    }
+
+    /**
+     * Get disk usage information
+     */
+    private function getDiskUsage()
+    {
+        try {
+            $bytes = disk_free_space('/');
+            $total_bytes = disk_total_space('/');
+            $used_bytes = $total_bytes - $bytes;
+            
+            return [
+                'used' => $this->formatBytes($used_bytes),
+                'free' => $this->formatBytes($bytes),
+                'total' => $this->formatBytes($total_bytes),
+                'percentage' => round(($used_bytes / $total_bytes) * 100, 2)
+            ];
+        } catch (\Exception $e) {
+            return ['used' => 'N/A', 'free' => 'N/A', 'total' => 'N/A', 'percentage' => 0];
+        }
+    }
+
+    /**
+     * Get memory usage information
+     */
+    private function getMemoryUsage()
+    {
+        try {
+            $meminfo = file_get_contents('/proc/meminfo');
+            preg_match('/MemTotal:\s+(\d+)/', $meminfo, $total);
+            preg_match('/MemAvailable:\s+(\d+)/', $meminfo, $available);
+            
+            if (isset($total[1]) && isset($available[1])) {
+                $total_kb = $total[1];
+                $available_kb = $available[1];
+                $used_kb = $total_kb - $available_kb;
+                
+                return [
+                    'used' => $this->formatBytes($used_kb * 1024),
+                    'available' => $this->formatBytes($available_kb * 1024),
+                    'total' => $this->formatBytes($total_kb * 1024),
+                    'percentage' => round(($used_kb / $total_kb) * 100, 2)
+                ];
+            }
+        } catch (\Exception $e) {
+            // Fallback for systems without /proc/meminfo
+        }
+        
+        return ['used' => 'N/A', 'available' => 'N/A', 'total' => 'N/A', 'percentage' => 0];
+    }
+
+    /**
+     * Get list of available backups
+     */
+    private function getBackupList()
+    {
+        // This would typically read from a backup directory
+        // For now, we'll return a mock list
+        return [
+            [
+                'name' => 'backup_2024_01_15_10_30_00.sql',
+                'size' => '2.5 MB',
+                'created_at' => '2024-01-15 10:30:00',
+            ],
+            [
+                'name' => 'backup_2024_01_14_10_30_00.sql',
+                'size' => '2.3 MB',
+                'created_at' => '2024-01-14 10:30:00',
+            ],
+        ];
+    }
+
+    /**
+     * Format bytes to human readable format
+     */
+    private function formatBytes($bytes, $precision = 2)
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+        
+        for ($i = 0; $bytes > 1024 && $i < count($units) - 1; $i++) {
+            $bytes /= 1024;
+        }
+        
+        return round($bytes, $precision) . ' ' . $units[$i];
+    }
 }

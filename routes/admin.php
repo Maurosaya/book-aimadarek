@@ -27,4 +27,20 @@ Route::middleware(['web', 'super-admin'])->group(function () {
     Route::get('/admin/tenants/{tenant}/edit', [SuperAdminController::class, 'editTenant'])->name('admin.tenants.edit');
     Route::put('/admin/tenants/{tenant}', [SuperAdminController::class, 'updateTenant'])->name('admin.tenants.update');
     Route::delete('/admin/tenants/{tenant}', [SuperAdminController::class, 'destroyTenant'])->name('admin.tenants.destroy');
+
+    // Users Management
+    Route::get('/admin/users', [SuperAdminController::class, 'users'])->name('admin.users.index');
+    Route::get('/admin/users/create', [SuperAdminController::class, 'createUser'])->name('admin.users.create');
+    Route::post('/admin/users', [SuperAdminController::class, 'storeUser'])->name('admin.users.store');
+    Route::get('/admin/users/{user}', [SuperAdminController::class, 'showUser'])->name('admin.users.show');
+    Route::get('/admin/users/{user}/edit', [SuperAdminController::class, 'editUser'])->name('admin.users.edit');
+    Route::put('/admin/users/{user}', [SuperAdminController::class, 'updateUser'])->name('admin.users.update');
+    Route::delete('/admin/users/{user}', [SuperAdminController::class, 'destroyUser'])->name('admin.users.destroy');
+    Route::patch('/admin/users/{user}/toggle', [SuperAdminController::class, 'toggleUser'])->name('admin.users.toggle');
+
+    // System Configuration
+    Route::get('/admin/settings', [SuperAdminController::class, 'settings'])->name('admin.settings.index');
+    Route::put('/admin/settings', [SuperAdminController::class, 'updateSettings'])->name('admin.settings.update');
+    Route::get('/admin/settings/backup', [SuperAdminController::class, 'backup'])->name('admin.settings.backup');
+    Route::post('/admin/settings/backup', [SuperAdminController::class, 'createBackup'])->name('admin.settings.backup.create');
 });
