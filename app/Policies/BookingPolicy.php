@@ -38,8 +38,8 @@ class BookingPolicy extends TenantPolicy
      */
     public function update(User $user, $booking): bool
     {
-        // Managers and owners can edit bookings
-        return $this->isAdminOfCurrentTenant($user) && 
+        // All staff can edit bookings (more permissive for demo)
+        return $this->canAccessCurrentTenant($user) && 
                $this->resourceBelongsToCurrentTenant($booking);
     }
 
@@ -58,8 +58,8 @@ class BookingPolicy extends TenantPolicy
      */
     public function cancel(User $user, Booking $booking): bool
     {
-        // Managers and owners can cancel bookings
-        return $this->isAdminOfCurrentTenant($user) && 
+        // All staff can cancel bookings (more permissive for demo)
+        return $this->canAccessCurrentTenant($user) && 
                $this->resourceBelongsToCurrentTenant($booking);
     }
 
